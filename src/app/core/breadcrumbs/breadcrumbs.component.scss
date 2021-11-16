@@ -1,0 +1,57 @@
+.breadcrumb-item + .breadcrumb-item {
+  padding-left: 0.5rem;
+
+  //styleName: <NAV Style> Avenir LT Std 55 Roman 16;
+  font-family: "AvenirLTStd-Roman";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0.25px;
+  text-align: center;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  display: block;
+  content: " ";
+  background-image: url("/assets/images/nav-arrow-right.svg");
+  background-size: 10px 10px;
+  background-repeat: no-repeat;
+  width: 10px;
+  height: 10px;
+  margin: auto auto;
+  padding-right: 1rem;
+  margin-top: 5px;
+}
+
+.breadcrumb-item + .breadcrumb-item:nth-child(2)::before {
+  content: none;
+}
+
+.breadcrumb-item a {
+  color: #19303b;
+}
+
+.breadcrumb-item.active a {
+  color: #fab900;
+  cursor: default;
+}
+
+.breadcrumb-item a.disabled {
+  color: #c4c4c4;
+}
+
+@media (max-width: 400px) {
+  .mobile {
+    display: none;
+  }
+
+  ol {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  a {
+    font-size: 15px;
+  }
+}

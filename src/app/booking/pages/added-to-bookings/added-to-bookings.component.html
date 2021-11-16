@@ -1,0 +1,40 @@
+<div class="container">
+  <app-product-preview-images [products]="products"></app-product-preview-images>
+
+  <section class="text-center">
+    <div class="tyros-reg fs-36">Added to your Booking</div>
+    <div class="fs-24 tyros-reg mt-2">
+      {{ currentBooking?.yachtName || "Booking" }} |
+      {{ currentBooking?.location?.delivery?.name }} -
+      {{ currentBooking?.location?.collection?.name }}
+    </div>
+    <div class="fs-24 avenir-light">
+      {{ currentBooking?.period?.fromDate?.day }}.{{
+      currentBooking?.period?.fromDate?.month
+      }}.{{ currentBooking?.period?.fromDate?.year }} -
+      {{ currentBooking?.period?.toDate?.day }}.{{
+      currentBooking?.period?.toDate?.month
+      }}.{{ currentBooking?.period?.toDate?.year }}
+    </div>
+    <div class="row justify-content-center">
+      <div class="pr-1">
+        <button id="added-to-bookings-continue-shopping" class="btn btn-secondary px-5 py-2 mt-3" (click)="homepage()">
+          CONTINUE SHOPPING
+        </button>
+      </div>
+      <div class="pl-1">
+        <button id="added-to-bookings-checkout" class="btn btn-primary px-5 py-2 mt-3" (click)="viewCurrentBookingsButtonClicked()">
+          CHECKOUT
+        </button>
+      </div>
+    </div>
+  </section>
+  <hr />
+  <!-- <div class="fs-24 tyros-reg primary">Recommended</div>
+  <div class="tyros-reg fs-36">Water Toys to Rent</div>
+  <app-card-grid></app-card-grid>
+  <app-new-question></app-new-question> -->
+  <div class="pb-4">
+    <app-we-specialize></app-we-specialize>
+  </div>
+</div>

@@ -1,0 +1,63 @@
+<div class="modal-header m-4 border-bottom-0 d-flex justify-content-between">
+  <button
+    type="button"
+    class="btn btn-transparent btn-no-border"
+    aria-label="Close"
+    (click)="modal.dismiss('back')"
+  >
+    <img src="assets/images/mobile-back.svg" />
+  </button>
+
+  <button
+    type="button"
+    class="close btn-no-border"
+    aria-label="Close"
+    (click)="modal.dismiss()"
+  >
+    <img src="assets/images/close.svg" />
+  </button>
+</div>
+<div class="modal-body">
+  <h4 class="text-center">Pick-Up Location</h4>
+
+  <app-location-select
+    label="PICK-UP LOCATION"
+    [locations]="locations"
+    [location]="pickUpLocation"
+    (locationChange)="modal.close($event)"
+  ></app-location-select>
+
+  <h4 class="mt-3">Where shall we drop off the Toy?</h4>
+  <p class="p-style-2">
+    Select a popular port or search for the most convenient one in the field
+    above.
+  </p>
+
+  <h4 *ngIf="popularMediterraneanPorts" class="mt-3">
+    Popular Mediterranean Ports
+  </h4>
+  <div *ngIf="popularMediterraneanPorts" class="row justify-content-center">
+    <button
+      *ngFor="let location of popularMediterraneanPorts"
+      class="col-5 btn m-1 py-3"
+      (click)="modal.close(location)"
+      [class.btn-outline-secondary]="location.name !== pickUpLocation?.name"
+      [class.btn-secondary]="location.name === pickUpLocation?.name"
+    >
+      {{ location.name }}
+    </button>
+  </div>
+
+  <h4 *ngIf="popularCaribbeanPorts" class="mt-3">Popular Caribbean Ports</h4>
+  <div *ngIf="popularCaribbeanPorts" class="row justify-content-center">
+    <button
+      *ngFor="let location of popularCaribbeanPorts"
+      class="col-5 btn m-1 py-3"
+      (click)="modal.close(location)"
+      [class.btn-outline-secondary]="location.name !== pickUpLocation?.name"
+      [class.btn-secondary]="location.name === pickUpLocation?.name"
+    >
+      {{ location.name }}
+    </button>
+  </div>
+</div>

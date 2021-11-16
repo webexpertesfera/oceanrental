@@ -1,0 +1,106 @@
+footer {
+  background: #ffffff;
+  // background-color: #F8F8F8;
+  // box-shadow: 0px -4px 10px rgba(196, 196, 196, 0.2);
+}
+
+.icon-height{
+  max-height: 55px;
+}
+
+.img-height{
+  max-height: 20px;
+}
+
+.background{
+  background-color: #F8F8F8;
+  box-shadow: 0px -4px 10px rgba(196, 196, 196, 0.2);
+}
+
+.info-point img {
+  margin: auto;
+  display: block;
+}
+
+h5 {
+  /* <Style 7> Tyros Pro Medium 18 */
+  font-family: "TyrosPro-Medium";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 32px;
+  align-items: center;
+  text-align: center;
+}
+
+h6 {
+  /* <Style 6> Tyros Pro Bold 16 */
+
+  font-family: "TyrosPro-Bold";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 20px;
+  color: #19303b;
+}
+
+p {
+  /* <Mobile P Style 4> Avenir LT Std 45 Book 12 */
+  font-family: "AvenirLTStd-Book";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
+
+  text-align: center;
+  letter-spacing: 0.1px;
+}
+
+a {
+  /* <Mobile P Style 4> Avenir LT Std 45 Book 12 */
+  font-family: "AvenirLTStd-Book";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
+  color: #fab900;
+
+  text-align: center;
+  letter-spacing: 0.1px;
+}
+
+ul li a {
+  /* Roman 16 BOLD */
+  font-family: "AvenirLTStd-Roman";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.5px;
+
+  color: #19303b;
+}
+
+.copyright {
+  /* <P Style 3> Avenir LT Std 45 Book 16 */
+  font-family: "AvenirLTStd-Book";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  color: #c4c4c4;
+}
+
+
+@media (max-width: 767px) {
+  .center{
+    justify-content: center;
+  }
+}

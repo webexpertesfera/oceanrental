@@ -1,0 +1,344 @@
+<div *ngIf="product" class="container">
+  <div class="row">
+    <div class="col">
+      <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12 order-last order-lg-1 order-md-1">
+      <ngb-carousel
+        *ngIf="product.images"
+        [showNavigationArrows]="true"
+        [showNavigationIndicators]="false"
+        lightbox-group
+      >
+        <ng-template ngbSlide *ngFor="let image of product.images">
+          <div class="picsum-img-wrapper">
+            <img
+              #productImage
+              class="img-fluid product-image"
+              [src]="image.url"
+              [alt]="product.name"
+              lightbox
+            />
+          </div>
+        </ng-template>
+      </ngb-carousel>
+
+      <ul class="nav nav-justified mx-5 my-2">
+        <li class="nav-item">
+          <button class="btn btn-transparent" (click)="openFeatures()">
+            Features
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="btn btn-transparent" (click)="openGallery()">
+            Gallery
+          </button>
+        </li>
+      </ul>
+
+      <ul class="nav nav-justified mx-5">
+        <li class="nav-item">
+          <a
+            href="https://wa.me/+33640629599"
+            class="btn btn-transparent primary"
+          >
+            <img src="assets/images/chat.svg" /> Chat with a specialist
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div
+      class="col-lg-6 col-md-6 col-sm-12 order-first order-lg-12 order-md-12"
+    >
+      <h4 *ngIf="product?.description?.tagline" class="primary">
+        {{product?.description?.tagline}}
+      </h4>
+      <h1>{{product?.name}} Rental</h1>
+      <p *ngIf="product?.description?.summary" class="my-4 p-style-2">
+        {{product?.description?.summary}}
+      </p>
+
+      <div class="row">
+        <div class="col-5 d-none d-md-block d-lg-block">
+          <p class="mb-n1 p-style-4">Total excl. VAT & Deposit</p>
+          <h2 class="mb-n1">{{product?.price | number : '1.0-2'}} €</h2>
+          <p class="p-style-4 grey">per day</p>
+        </div>
+        <div
+          *ngIf="loadingAvailability"
+          class="col-5 d-none d-md-block d-lg-block"
+        >
+          <div class="row">
+            <div class="col-2">
+              <img src="assets/images/alert.svg" />
+            </div>
+            <div class="col-10 m-0 p-0">
+              <h5 class="text-uppercase primary">Loading...</h5>
+              <p class="p-style-4">
+                We are checking availability for the chosen location, dates and
+                quantity.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          *ngIf="!availabilityChecked && !loadingAvailability"
+          class="col-5 d-none d-md-block d-lg-block"
+        >
+          <div class="row">
+            <div class="col-2">
+              <img src="assets/images/alert.svg" />
+            </div>
+            <div class="col-10 m-0 p-0">
+              <h5 class="text-uppercase primary">Check Availability</h5>
+              <p class="p-style-4">
+                Please adjust location, dates or quantity to add this item to
+                your booking!
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          *ngIf="availabilityChecked && !loadingAvailability"
+          class="col-5 d-none d-md-block d-lg-block"
+        >
+          <div *ngIf="availabilityState.state === 'NOT_AVAILABLE'" class="row">
+            <div class="col-2">
+              <img src="assets/images/alert.svg" class="btn-no-border" />
+            </div>
+            <div class="col-10 m-0 p-0">
+              <h5 class="text-uppercase primary">Not Available</h5>
+              <p *ngIf="availabilityState.notes" class="p-style-4">
+                {{availabilityState.notes}}
+              </p>
+              <p *ngIf="!availabilityState.notes" class="p-style-4">
+                Please adjust location, dates or quantity to add this item to
+                your booking!
+              </p>
+            </div>
+          </div>
+          <div
+            *ngIf="availabilityState.state === 'AVAILABLE_BUT_DELAYED'"
+            class="row"
+          >
+            <div class="col-2">
+              <img src="assets/images/alert.svg" class="btn-no-border" />
+            </div>
+            <div class="col-10 m-0 p-0">
+              <h5 class="text-uppercase primary">Delayed</h5>
+              <p *ngIf="availabilityState.notes" class="p-style-4">
+                {{availabilityState.notes}}
+              </p>
+              <p *ngIf="!availabilityState.notes" class="p-style-4">
+                Please adjust location, dates or quantity to add this item to
+                your booking!
+              </p>
+            </div>
+          </div>
+          <div *ngIf="availabilityState.state === 'AVAILABLE'" class="row">
+            <div class="col-2">
+              <img
+                src="assets/images/available-green.svg"
+                class="btn-no-border"
+              />
+            </div>
+            <div class="col-10 m-0 p-l-1">
+              <h5 class="text-uppercase black">Available</h5>
+              <p *ngIf="availabilityState.notes" class="p-style-4">
+                {{availabilityState.notes}}
+              </p>
+              <p *ngIf="!availabilityState.notes" class="p-style-4">
+                This item is available for your dates.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-none d-md-inline d-lg-inline">
+        <app-booking-form
+          (availability)="availability($event)"
+          (loadingAvailabilityEvent)="loadingAvailabilityEvent($event)"
+          [(booking)]="currentBooking"
+          [bookings]="bookings"
+          [locations]="locations"
+          [product]="product"
+          (addToBooking)="addToBooking($event)"
+          (lovedChange)="lovedChange($event)"
+          (manageBookingClick)="manageBookingClick($event)"
+        ></app-booking-form>
+      </div>
+    </div>
+  </div>
+
+  <hr class="my-5" />
+
+  <div *ngIf="product?.description?.section1" class="row mt-5">
+    <div class="col">
+      <h4>{{product?.description?.section1?.head}}</h4>
+      <div
+        class="p-style-1"
+        [innerHTML]="product?.description?.section1?.paragraph"
+      ></div>
+    </div>
+  </div>
+
+  <hr *ngIf="product?.description?.section1" class="my-5" />
+
+  <div *ngIf="product?.description?.section2" class="row">
+    <div class="col">
+      <h4>{{product?.description?.section2?.head}}</h4>
+      <div
+        class="p-style-1"
+        [innerHTML]="product?.description?.section2?.paragraph"
+      ></div>
+    </div>
+  </div>
+
+  <div class="grey-background p-4 mt-5">
+    <div *ngIf="product?.description?.section3" class="row">
+      <div class="col">
+        <h4>{{product?.description?.section3?.head}}</h4>
+        <div
+          class="p-style-1"
+          [innerHTML]="product?.description?.section3?.paragraph"
+        ></div>
+      </div>
+    </div>
+
+    <div *ngIf="product?.description?.section4" class="row mt-5">
+      <div class="col">
+        <h4>{{product?.description?.section4?.head}}</h4>
+        <div
+          class="p-style-1"
+          [innerHTML]="product?.description?.section4?.paragraph"
+        ></div>
+      </div>
+    </div>
+
+    <div *ngIf="product?.description?.section5" class="row mt-5">
+      <div class="col">
+        <h4>{{product?.description?.section5?.head}}</h4>
+        <div
+          class="p-style-1"
+          [innerHTML]="product?.description?.section5?.paragraph"
+        ></div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="product?.description?.section6" class="row mt-5">
+    <div class="col">
+      <h4>{{product?.description?.section6?.head}}</h4>
+      <div
+        class="p-style-1"
+        [innerHTML]="product?.description?.section6?.paragraph"
+      ></div>
+    </div>
+  </div>
+
+  <div *ngIf="product?.description?.section7" class="row mt-5">
+    <div class="col">
+      <h4>{{product?.description?.section7?.head}}</h4>
+      <div
+        class="p-style-1"
+        [innerHTML]="product?.description?.section7?.paragraph"
+      ></div>
+    </div>
+  </div>
+
+  <!-- <div *ngIf="product?.description?.section8" class="row mt-5">
+    <div class="col">
+      <h4>{{product?.description?.section8?.head}}</h4>
+      <div
+        class="p-style-1"
+        [innerHTML]="product?.description?.section8?.paragraph"
+      ></div>
+    </div>
+  </div>
+
+  <div *ngIf="product?.description?.section9" class="row mt-5">
+    <div class="col">
+      <h4>{{product?.description?.section9?.head}}</h4>
+      <div
+        class="p-style-1"
+        [innerHTML]="product?.description?.section9?.paragraph"
+      ></div>
+    </div>
+  </div> -->
+
+  <div
+    *ngIf="recommendedProducts && recommendedProducts.length > 0"
+    class="my-4 py-4"
+  >
+    <div class="primary align-items-center mt-5 fs-24 tyros-reg-600">
+      Available
+    </div>
+    <div class="fs-36 align-items-center tyros-reg-700">Spares & Extras</div>
+    <p class="p-style-2">
+      These are optional spares and extras that you can add to your booking
+      during check out.
+    </p>
+    <app-recommended-product-carousel
+      [products]="recommendedProducts"
+      [showAddToBooking]="false"
+      [showCounter]="false"
+      (productClick)="productClick($event)"
+    ></app-recommended-product-carousel>
+  </div>
+
+  <!-- Additional section for the Water Toys -->
+  <!-- <div *ngIf="recommendedWaterToys && recommendedWaterToys.length > 0" class="my-4 py-4"> -->
+    <!-- <div class="primary align-items-center mt-5 fs-24 tyros-reg-600">Recommended</div> -->
+    <!-- <div class="fs-36 align-items-center tyros-reg-700">Water Toys to Rent</div> -->
+    <!-- <p class="p-style-2">
+      These are optional spares and extras that you can add to your booking
+      during check out.
+    </p> -->
+
+    <!-- <app-recommended-water-toys [toys]="recommendedWaterToys" (toyClick)="toyClick($event)"></app-recommended-water-toys> -->
+    <!-- <app-recommended-product-carousel [products]="recommendedWaterToys" [showAddToBooking]="false" [showCounter]="false"
+      (productClick)="productClick($event)"></app-recommended-product-carousel> -->
+  <!-- </div> -->
+
+  <div *ngIf="product" class="my-5">
+    <app-faqs [title]="faqsTitle" [faqs]="product.faqs"></app-faqs>
+  </div>
+
+  <div class="py-4">
+    <app-we-specialize></app-we-specialize>
+  </div>
+</div>
+
+<footer *ngIf="product" class="footer d-block d-md-none d-lg-none">
+  <div class="container py-3">
+    <div class="row">
+      <div class="col">
+        <p class="p-style-2 mb-n1">{{product?.name}} Rental</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <p class="p-style-4 grey">{{product?.price}} € / day</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4">
+        <app-counter [(counter)]="product.quantity"></app-counter>
+      </div>
+      <div class="col-8">
+        <button
+          id="product-page-add-to-booking-mobile"
+          class="btn btn-primary btn-lg btn-block py-3 mt-2 btn-no-border"
+          (click)="openAddToBookingModal()"
+        >
+          Add to Booking
+        </button>
+      </div>
+    </div>
+  </div>
+</footer>

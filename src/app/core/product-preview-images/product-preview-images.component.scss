@@ -1,0 +1,41 @@
+.img {
+  display: flex;
+  justify-content: center;
+  width: 80%;
+  object-fit: contain;
+}
+
+.img-start {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  object-fit: contain;
+}
+
+.h-64 {
+  height: 64px;
+}
+
+@media (max-width: 1000px) {
+  .plus-sign {
+    width: 4%;
+  }
+
+  .array-number {
+    font-size: 40px;
+  }
+}
+
+@media (max-width: 575px) {
+  .col-4 {
+    padding-left: 0;
+  }
+
+  .img {
+    width: 80%;
+  }
+
+  .array-number {
+    font-size: 30px;
+  }
+}

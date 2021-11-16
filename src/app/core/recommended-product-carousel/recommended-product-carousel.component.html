@@ -1,0 +1,130 @@
+<div
+  class="row d-flex justify-content-between align-items-center mt-4 horizontal-scroll"
+>
+  <div
+    *ngFor="let product of products"
+    class="col-11 col-sm-6 col-md-3 col-lg-2 text-center d-flex mt-3 recommended-product"
+  >
+    <div class="mobile pointer" (click)="productClick.emit(product)">
+      <div class="d-flex">
+        <img class="img-fluid img" [src]="product.imageThumbnail?.url" />
+        <app-btn-love></app-btn-love>
+      </div>
+
+      <div class="mobile-right">
+        <div class="row j-center">
+          <div
+            *ngIf="availabilityChecked && !loadingAvailability"
+            class="j-center"
+          >
+            <div *ngIf="availabilityState.state === 'AVAILABLE'" class="d-flex">
+              <button
+                *ngIf="!product.note"
+                type="button"
+                class="btn btn-transparent btn-no-border mr-2"
+                placement="top"
+                ngbPopover="This item is available for your dates."
+                popoverTitle="Available"
+              >
+                <img class="pointer" src="assets/images/available-green.svg" />
+              </button>
+
+              <button
+                *ngIf="product.note"
+                type="button"
+                class="btn btn-transparent btn-no-border mr-2"
+                placement="top"
+                ngbPopover="{{ product.note }}"
+                popoverTitle="Available"
+              >
+                <img class="pointer" src="assets/images/available-green.svg" />
+              </button>
+            </div>
+            <div
+              *ngIf="availabilityState.state === 'NOT_AVAILABLE'"
+              class="d-flex"
+            >
+              <button
+                *ngIf="product.note"
+                type="button"
+                class="btn btn-transparent btn-no-border mr-2"
+                placement="top"
+                ngbPopover="{{ product.note }}"
+                popoverTitle="Not Available"
+              >
+                <img class="pointer" src="assets/images/alert-orange.svg" />
+              </button>
+
+              <button
+                *ngIf="!product.note"
+                type="button"
+                class="btn btn-transparent btn-no-border mr-2"
+                placement="top"
+                ngbPopover="This item is not available for your dates in the requested quantity."
+                popoverTitle="Not Available"
+              >
+                <img class="pointer" src="assets/images/alert-orange.svg" />
+              </button>
+            </div>
+            <div
+              *ngIf="availabilityState.state === 'AVAILABLE_BUT_DELAYED'"
+              class="d-flex"
+            >
+              <button
+                *ngIf="product.note"
+                type="button"
+                class="btn btn-transparent btn-no-border mr-2"
+                placement="top"
+                ngbPopover="{{ product.note }}"
+                popoverTitle="Delayed"
+              >
+                <img class="pointer" src="assets/images/alert.svg" />
+              </button>
+
+              <button
+                *ngIf="!product.note"
+                type="button"
+                class="btn btn-transparent btn-no-border mr-2"
+                placement="top"
+                ngbPopover="This item is available for your dates, however it may be delayed in being delivered."
+                popoverTitle="Delayed"
+              >
+                <img class="pointer" src="assets/images/alert.svg" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="fs-16 tyros one-line">{{ product.name }}</div>
+        <div class="fs-18 tyros-reg">
+          {{ product.price | number: "1.0-2" }} €
+        </div>
+        <p class="small-grey-font">per day</p>
+
+        <div *ngIf="showCounter">
+          <app-counter
+            class="count-center"
+            [(counter)]="product.quantity"
+            [disabled]="loadingAvailability"
+            (counterChange)="productQuantityChanged(product, $event)"
+          ></app-counter>
+        </div>
+
+        <button
+          *ngIf="showAddToBooking"
+          class="btn btn-primary btn-block"
+          [disabled]="loadingAvailability"
+          (click)="addToCurrentBookingsButtonClicked(product)"
+        >
+          ADD TO BOOKING
+        </button>
+        <div
+          *ngIf="product.addedToBooking"
+          class="fs-12 avenir-light fab pt-2 px-2"
+        >
+          Item added to your Booking.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,465 @@
+<div class="container" (window:resize)="onResize($event)">
+  <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+
+  <ngb-accordion *ngIf="booking" [closeOthers]="true" [activeIds]="activeIds" (panelChange)="beforeChange($event)"
+    #accordion="ngbAccordion" class="accordion-border">
+    <ngb-panel *ngIf="shouldShow('contact-information')" id="contact-information">
+      <ng-template ngbPanelHeader>
+        <div class="row">
+          <div class="col-lg-8 col-md-8 col-sm-12 mobile-center">
+            <h4>
+              1 of 5
+            </h4>
+            <h2>
+              Contact Information
+            </h2>
+          </div>
+          <div class="col-lg-4 col-md-4 mobile-display">
+            <div class="row justify-content-center mb-3">
+              <div class="col-auto">
+                <img *ngIf="isContactInformationValid()" src="assets/images/available.svg" />
+                <img *ngIf="!isContactInformationValid()" src="assets/images/alert-orange.svg" />
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-auto">
+                <button ngbPanelToggle (click)="setActive('contact-information')"
+                  class="btn btn-outline-secondary px-5">
+                  Edit
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <p class="p-style-2 mobile-center mt-n4">How can we reach you?</p>
+        <div class="row mt-4">
+          <div class="col-lg-6 col-md-8 col-sm-12">
+            <form (submit)="submitContactInformation()">
+              <div class="form-group">
+                <input type="text" id="name" name="name" class="form-control" required minlength="4"
+                  [(ngModel)]="booking.name" placeholder="Your Name" #name="ngModel" />
+                <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+                  <div *ngIf="name.errors?.required">
+                    Name is required.
+                  </div>
+                  <div *ngIf="name.errors?.minlength">
+                    Name must be at least 4 characters long.
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <input class="form-control" name="firstEmail" type="email" [(ngModel)]="booking.email"
+                  placeholder="E-mail" #firstEmail="ngModel" email required />
+                <div *ngIf="firstEmail.invalid && (firstEmail.dirty || firstEmail.touched)" class="alert alert-danger">
+                  <div *ngIf="firstEmail.errors?.required">
+                    Email is required.
+                  </div>
+                  <div *ngIf="firstEmail.invalid">
+                    Email must be valid.
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <input class="form-control" name="phone" type="tel"
+                  pattern="(([+][(]?[0-9]{1,3}[)]?)|([(]?[0-9]{4}[)]?))\s*[)]?[-\s\.]?[(]?[0-9]{1,3}[)]?([-\s\.]?[0-9]{3})([-\s\.]?[0-9]{3,4})"
+                  [(ngModel)]="booking.phone" placeholder="Phone" required #phone="ngModel" autocomplete="false"/>
+
+                <div *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="alert alert-danger">
+                  <div *ngIf="phone.errors?.required">
+                    Phone Number is required.
+                  </div>
+                  <div *ngIf="phone.invalid">
+                    Phone Number must be valid, have you included the country code? E.g. +31 ...
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <select class="form-control" name="role" [(ngModel)]="booking.role">
+                  <option [ngValue]="undefined" [disabled]="true">Role</option>
+                  <option *ngFor="let role of roles" [ngValue]="role.key">{{role.value}}</option>
+                </select>
+              </div>
+              <button id="checkout-step-1" type="submit" [disabled]="!isContactInformationValid() && !firstEmail.invalid"
+                class="btn btn-primary btn-block py-3">
+                Continue
+              </button>
+            </form>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+
+    <ngb-panel *ngIf="shouldShow('yacht-information')" id="yacht-information" [disabled]="isYachtInformationDisabled()">
+      <ng-template ngbPanelHeader>
+        <div class="row">
+          <div class="col-sm-2 hide-not-mobile">
+            <button ngbPanelToggle (click)="setActive('contact-information')" class="btn btn-outline-secondary">
+              Back
+            </button>
+          </div>
+          <div class="col-lg-8 col-md-8 col-sm-10 mobile-center">
+            <h4>
+              2 of 5
+            </h4>
+            <h2>
+              Yacht Information
+            </h2>
+          </div>
+          <div *ngIf="showYachtInformationToggle()" class="col-lg-4 col-md-4 mobile-display">
+            <div class="row justify-content-center mb-3">
+              <div class="col-auto">
+                <img *ngIf="isYachtInformationValid()" src="assets/images/available.svg" />
+                <img *ngIf="!isYachtInformationValid()" src="assets/images/alert-orange.svg" />
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-auto">
+                <button ngbPanelToggle (click)="setActive('yacht-information')" class="btn btn-outline-secondary px-5">
+                  Edit
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <p class="p-style-2 mobile-center mt-n4">Who can we talk to on-board?</p>
+        <div class="row mt-4">
+          <div class="col-lg-6 col-md-8 col-sm-12">
+            <form (submit)="submitYachtInformation()">
+              <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="same-as-contact"
+                  (click)="sameAsContactInformation()" />
+                <label class="form-check-label ml-4 p-style-3" for="same-as-contact">Use Contact Information.</label>
+              </div>
+              <div class="form-group">
+                <input class="form-control" name="yachtName" type="text" [(ngModel)]="booking.yachtName"
+                  placeholder="Yacht Name" />
+              </div>
+              <div class="form-group">
+                <input class="form-control" name="yachtContactName" type="text" [(ngModel)]="booking.yachtContactName"
+                  placeholder="Contact Name" />
+              </div>
+              <div class="form-group">
+                <select class="form-control" name="role" [(ngModel)]="booking.yachtRole">
+                  <option [ngValue]="undefined" [disabled]="true">Role</option>
+                  <option *ngFor="let role of roles" [ngValue]="role.key">{{role.value}}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <input class="form-control" name="yachtEmail" type="email" [(ngModel)]="booking.yachtEmail"
+                  placeholder="E-mail" #yachtEmail="ngModel" email />
+                <div *ngIf="yachtEmail.invalid && (yachtEmail.dirty || yachtEmail.touched)" class="alert alert-danger">
+                  <div *ngIf="yachtEmail.invalid">
+                    Email must be valid.
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <input class="form-control" name="yachtPhone" type="tel"
+                  pattern="(([+][(]?[0-9]{1,3}[)]?)|([(]?[0-9]{4}[)]?))\s*[)]?[-\s\.]?[(]?[0-9]{1,3}[)]?([-\s\.]?[0-9]{3})([-\s\.]?[0-9]{3,4})"
+                  [(ngModel)]="booking.yachtPhone" placeholder="Phone" required #yachtPhone="ngModel" autocomplete="false"/>
+
+                <div *ngIf="yachtPhone.invalid && (yachtPhone.dirty || yachtPhone.touched)" class="alert alert-danger">
+                  <div *ngIf="yachtPhone.errors?.required">
+                    Phone Number is required.
+                  </div>
+                  <div *ngIf="yachtPhone.invalid">
+                    Phone Number must be valid, have you included the country code? E.g. +31 ...
+                  </div>
+                </div>
+              </div>
+              <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="no-information" (click)="noInfoYet()" />
+                <label class="form-check-label ml-4 p-style-3" for="no-information">I don't have this information yet.
+                  You can still continue
+                  with your booking.</label>
+              </div>
+              <button id="checkout-step-2" [disabled]="!isYachtInformationValid()" type="submit" class="btn btn-primary btn-block py-3">
+                Continue
+              </button>
+            </form>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+
+    <ngb-panel *ngIf="shouldShow('pick-up-details')" id="pick-up-details" [disabled]="isPickUpDetailsDisabled()">
+      <ng-template ngbPanelHeader>
+        <div class="row">
+          <div class="col-sm-2 hide-not-mobile">
+            <button ngbPanelToggle (click)="setActive('yacht-information')" class="btn btn-outline-secondary">
+              Back
+            </button>
+          </div>
+          <div class="col-lg-8 col-md-8 col-sm-10 mobile-center">
+            <h4>
+              3 of 5
+            </h4>
+            <h2>
+              Pick Up Details
+            </h2>
+          </div>
+          <div *ngIf="showPickUpDetailsToggle()" class="col-lg-4 col-md-4 mobile-display">
+            <div class="row justify-content-center mb-3">
+              <div class="col-auto">
+                <img *ngIf="isPickUpDetailsValid()" src="assets/images/available.svg" />
+                <img *ngIf="!isPickUpDetailsValid()" src="assets/images/alert-orange.svg" />
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-auto">
+                <button ngbPanelToggle (click)="setActive('pick-up-details')" class="btn btn-outline-secondary px-5">
+                  Edit
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <p class="p-style-2 mobile-center mt-n4">How can we reach you?</p>
+        <div class="row mt-4">
+          <div class="col-lg-6 col-md-8 col-sm-12">
+            <form (submit)="submitPickUpDetails()">
+              <div class="form-group">
+                <input class="form-control" name="yachtName" type="text" [(ngModel)]="booking.yachtName"
+                  placeholder="Yacht Name" />
+              </div>
+              <div class="form-group">
+                <app-countries-select [countries]="countries" [(country)]="booking.pickUpCountry"
+                  (countryChange)="onCountryChange()"></app-countries-select>
+              </div>
+              <div class="form-group">
+                <input class="form-control" name="pickUpCity" type="text" [(ngModel)]="booking.pickUpCity"
+                  placeholder="City" required />
+                  
+                <!-- <select class="form-control" name="pickUpCity" [(ngModel)]="booking.pickUpCity">
+                  <option [ngValue]="undefined" [disabled]="true">City</option>
+                  <option *ngFor="let city of cities" [ngValue]="city.name">{{city.name}}</option>
+                </select> -->
+              </div>
+              <div class="form-group">
+                <input class="form-control" name="pickUpZipCode" type="text" [(ngModel)]="booking.pickUpZipCode"
+                  placeholder="Zip Code" />
+              </div>
+              <div class="form-group">
+                <textarea rows="3" class="form-control" name="pickUpAddress" type="text"
+                  [(ngModel)]="booking.pickUpAddress" placeholder="Address"></textarea>
+              </div>
+              <button id="checkout-step-3" [disabled]="!isPickUpDetailsValid()" type="submit" class="btn btn-primary btn-block py-3">
+                Continue
+              </button>
+            </form>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+
+    <ngb-panel *ngIf="shouldShow('drop-off-details')" id="drop-off-details" [disabled]="isDropOffDetailsDisabled()">
+      <ng-template ngbPanelHeader>
+        <div class="row">
+          <div class="col-sm-2 hide-not-mobile">
+            <!-- ; back('pick-up-details') -->
+            <button ngbPanelToggle (click)="setActive('pick-up-details')" class="btn btn-outline-secondary">
+              Back
+            </button>
+          </div>
+          <div class="col-lg-8 col-md-8 col-sm-10 mobile-center">
+            <h4>
+              4 of 5
+            </h4>
+            <h2>
+              Drop Off Details
+            </h2>
+          </div>
+          <div *ngIf="showDropOffDetailsToggle()" class="col-lg-4 col-md-4 mobile-display">
+            <div class="row justify-content-center mb-3">
+              <div class="col-auto">
+                <img *ngIf="isDropOffDetailsValid()" src="assets/images/available.svg" />
+                <img *ngIf="!isDropOffDetailsValid()" src="assets/images/alert-orange.svg" />
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-auto">
+                <button ngbPanelToggle (click)="setActive('drop-off-details')" class="btn btn-outline-secondary px-5">
+                  Edit
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <p class="p-style-2 mobile-center mt-n4">
+          Where do you want to drop off the Water Toys?
+        </p>
+        <div class="row mt-4">
+          <div class="col-lg-6 col-md-8 col-sm-12">
+            <form (submit)="submitDropOffDetails()">
+              <div class="form-group">
+                <input class="form-control" name="yachtName" type="text" [(ngModel)]="booking.yachtName"
+                  placeholder="Yacht Name" />
+              </div>
+              <div class="form-group">
+                <app-countries-select [countries]="countries" [(country)]="booking.dropOffCountry"
+                  (countryChange)="onDropOffCountryChange()"></app-countries-select>
+              </div>
+              <div class="form-group">
+                <input class="form-control" name="dropOffCity" type="text" [(ngModel)]="booking.dropOffCity"
+                  placeholder="City" required />
+
+                <!-- <select class="form-control" name="dropOffCity" [(ngModel)]="booking.dropOffCity">
+                  <option [ngValue]="undefined" [disabled]="true">City</option>
+                  <option *ngFor="let city of dropOffCities" [ngValue]="city.name">{{city.name}}</option>
+                </select> -->
+              </div>
+              <div class="form-group">
+                <input class="form-control" name="dropOffZipCode" type="text" [(ngModel)]="booking.dropOffZipCode"
+                  placeholder="Zip Code" />
+              </div>
+              <div class="form-group">
+                <textarea rows="3" class="form-control" name="dropOffAddress" type="text"
+                  [(ngModel)]="booking.dropOffAddress" placeholder="Address"></textarea>
+              </div>
+              <button id="checkout-step-4" [disabled]="!isDropOffDetailsValid()" type="submit" class="btn btn-primary btn-block py-3">
+                Continue
+              </button>
+            </form>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+
+    <ngb-panel *ngIf="shouldShow('billing-details')" id="billing-details" [disabled]="isBillingDetailsDisabled()">
+      <ng-template ngbPanelHeader>
+        <div class="row">
+          <div class="col-sm-2 hide-not-mobile">
+            <!-- back('drop-off-details') -->
+            <button ngbPanelToggle (click)="setActive('drop-off-details')" class="btn btn-outline-secondary">
+              Back
+            </button>
+          </div>
+          <div class="col-lg-8 col-md-8 col-sm-10 mobile-center">
+            <h4>
+              5 of 5
+            </h4>
+            <h2>
+              Billing Details
+            </h2>
+          </div>
+          <!-- <div *ngIf="showBillingDetailsToggle()" class="col-4">
+            <div class="row justify-content-center mb-3">
+              <div class="col-auto">
+                <img
+                  *ngIf="isBillingDetailsValid()"
+                  src="assets/images/available.svg"
+                />
+                <img
+                  *ngIf="!isBillingDetailsValid()"
+                  src="assets/images/alert-orange.svg"
+                />
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-auto">
+                <button ngbPanelToggle (click)="setActive('billing-details')" class="btn btn-outline-secondary px-5">
+                  Edit
+                </button>
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <p class="p-style-2 mobile-center mt-n4">Who should we invoice?</p>
+        <div class="row mt-4">
+          <div class="col-lg-6 col-md-8 col-sm-12">
+            <form>
+              <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="isCompany" name="isCompany"
+                  [(ngModel)]="booking.isCompany" />
+                <label class="form-check-label ml-4 p-style-3" for="isCompany">I am a Company.</label>
+              </div>
+              <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="useShippingAddress"
+                  (click)="useShippingAddress()" />
+                <label class="form-check-label ml-4 p-style-3" for="useShippingAddress">Use my Shipping Address.</label>
+              </div>
+              <div *ngIf="booking.isCompany" class="form-group">
+                <input class="form-control" name="companyName" [(ngModel)]="booking.companyName"
+                  placeholder="Company Name" />
+              </div>
+              <div *ngIf="booking.isCompany" class="form-group">
+                <input class="form-control" name="vatNumber" [(ngModel)]="booking.vatNumber" placeholder="VAT Number" />
+              </div>
+              <div class="form-group">
+                <input class="form-control" name="fullName" type="text" [(ngModel)]="booking.billingName"
+                  placeholder="Full Name" />
+              </div>
+              <div class="form-group">
+                <app-countries-select [countries]="countries" [(country)]="booking.billingCountry"
+                  (countryChange)="onBillingCountryChange()"></app-countries-select>
+              </div>
+              <div class="form-group">
+                <input class="form-control" name="billingCity" type="text" [(ngModel)]="booking.billingCity"
+                  placeholder="City" required />
+
+                <!-- <select class="form-control" name="billingCity" [(ngModel)]="booking.billingCity">
+                  <option [ngValue]="undefined" [disabled]="true">City</option>
+                  <option *ngFor="let city of billingCities" [ngValue]="city.name">{{city.name}}</option>
+                </select> -->
+              </div>
+              <div class="form-group">
+                <input class="form-control" name="billingZipCode" type="text" [(ngModel)]="booking.billingZipCode"
+                  placeholder="Zip Code" />
+              </div>
+              <div class="form-group">
+                <textarea rows="3" class="form-control" name="billingAddress" type="text"
+                  [(ngModel)]="booking.billingAddress" placeholder="Address"></textarea>
+              </div>
+
+              <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="terms-and-conditions"
+                  (click)="termsAndConditionsCheck()" />
+                <label class="form-check-label ml-4 p-style-3" for="terms-and-conditions">I agree to the Terms and Conditions.</label>
+              </div>
+              <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="security-deposit-consent"
+                  (click)="securityDepositCheck()" />
+                <label class="form-check-label ml-4 p-style-3" for="security-deposit-consent">I agree to the Security Deposit.</label>
+              </div>
+              <!-- <button
+                type="submit"
+                [disabled]="!isBillingDetailsValid()"
+                class="btn btn-primary btn-block py-3"
+              >
+                Continue
+              </button> -->
+            </form>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+
+  <div *ngIf="shouldShow('billing-details')" class="btn-checkout">
+    <button id="checkout-save" class="btn btn-lg btn-secondary mobile-margin px-5 mb-2" (click)="saveBooking()">
+      SAVE BOOKING
+    </button>
+    <div *ngIf="saved" class="alert alert-success">
+      Booking was saved.
+    </div>
+    <button id="checkout-pay" class="btn btn-lg btn-primary px-5 mb-2" [disabled]="!isBillingDetailsValid()"
+      (click)="submitBillingDetails()">
+      PROCEED TO PAYMENT
+    </button>
+  </div>
+
+  <!-- <div class="py-4">
+    <app-we-specialize></app-we-specialize>
+  </div> -->
+</div>

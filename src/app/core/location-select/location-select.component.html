@@ -1,0 +1,52 @@
+<div
+  class="select-container py-1"
+  (click)="$event.stopPropagation(); openLocationSelect()"
+>
+  <label class="mb-n1 pl-3 mt-2">{{ label }}</label>
+
+  <div ngbDropdown #locationSelect="ngbDropdown" class="mt-n1 mb-2">
+    <button *ngIf="!isTyping" class="btn btn-lg p-0 pl-3" type="button">
+      {{ location?.name }}
+    </button>
+    
+    <input
+      id="locationSelectInput"
+      #locationSearchInput
+      (click)="$event.stopPropagation(); openLocationSelect()"
+      *ngIf="isTyping"
+      type="text"
+      autocomplete="new-field-1"
+      class="form-control btn-no-border"
+      [(ngModel)]="locationSearch"
+      (keyup)="locationSearchChange()"
+    />
+    <div class="location-dropdown-menu mt-3" ngbDropdownMenu>
+      <div *ngIf="showCollect" >
+        <h1 class="water-toy-location-asker">
+          Where do you want the Water Toy to be Collected from?<br />
+        </h1>
+      </div>
+      <div *ngIf="showDeliver" >
+        <h1 class="water-toy-location-asker">
+          Where do you want the Water Toy to be Delivered to?
+        </h1>
+      </div>
+
+      <div
+        *ngFor="let location of filteredLocations"
+        ngbDropdownItem
+        class="drop-down-item-1"
+        (click)="$event.stopPropagation(); locationClick(location)"
+      >
+        <p>
+          <img
+            src="/assets/images/location.svg"
+            alt="-"
+            class="location-image"
+          />
+          {{ location.name }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

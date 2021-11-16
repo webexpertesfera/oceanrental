@@ -1,0 +1,69 @@
+h2 {
+  /* <Style 2> Tyros Pro Medium 36 */
+  font-family: "TyrosPro-Medium";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 42px;
+  text-align: center;
+  color: #19303b;
+}
+
+h3 {
+  /* <Mobile Style 3> Tyros Pro Regular 14 */
+  font-family: "TyrosPro-Regular";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 28px;
+  text-align: center;
+  color: #19303b;
+}
+
+h4 {
+  /* <Style 4> Tyros Pro SemiBold 24 */
+  font-family: "TyrosPro-SemiBold";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 34px;
+  text-align: center;
+  color: #fab900;
+}
+
+.p-style-2 {
+  /* <P Style 2> Avenir LT Std 35 Book 24 */
+  font-family: "AvenirLTStd-Book";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 30px;
+  text-align: center;
+  letter-spacing: 0.117321px;
+  color: #363636;
+}
+
+.p-style-4 {
+  /* <P Style 4> Avenir LT Std 45 Medium 14 */
+  font-family: "AvenirLTStd-Medium";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
+  align-items: center;
+  color: #363636;
+}
+
+.form-control {
+  min-height: 50px;
+  border: 1px solid #363636;
+  box-sizing: border-box;
+  border-radius: 2px;
+}
+
+.divider {
+  min-height: 84px;
+  width: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}

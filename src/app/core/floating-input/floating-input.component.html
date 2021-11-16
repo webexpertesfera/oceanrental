@@ -1,0 +1,12 @@
+<div class="float-container" [ngClass]="{ active: inputFocused }">
+  <label class="ml-n1">{{ label }}</label>
+  <input
+    class="form-control mt-3 btn-no-border"
+    type="text"
+    [placeholder]="placeholder"
+    (focus)="focus($event)"
+    (focusout)="focusOut($event)"
+    [ngModel]="value"
+    (ngModelChange)="valueChange.emit($event)"
+  />
+</div>

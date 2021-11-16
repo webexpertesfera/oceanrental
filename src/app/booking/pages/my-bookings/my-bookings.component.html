@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="fs-36 tyros-reg">My Bookings</div>
+
+  <button class="btn btn-transparent p-0 mt-3 btn-no-border" (click)="openCreateBookingModal()">
+    <img src="assets/images/plus-orange.svg" /> CREATE A NEW BOOKING
+  </button>
+
+  <div class="mobile">
+    <hr class="mt-4" />
+  </div>
+
+  <div class="my-3">
+    <app-booking-list-item *ngFor="let booking of bookings" [booking]="booking" (deleteBooking)="deleteBooking(booking)"
+    (manageBooking)="manageBooking(booking)"></app-booking-list-item>
+  </div>
+  
+  <div class="my-5">
+    <app-we-specialize></app-we-specialize>
+  </div>
+</div>

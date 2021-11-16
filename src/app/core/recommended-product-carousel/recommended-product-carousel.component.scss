@@ -1,0 +1,108 @@
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  min-height: 150px;
+  max-height: 150px;
+}
+
+.img2 {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  min-height: 35px !important;
+  max-height: 40px!important;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.discover {
+  display: none !important;
+}
+
+app-btn-love {
+  padding-top: 1rem;
+}
+
+.btn {
+  font-size: 10px;
+}
+
+.small-grey-font {
+  color: #c4c4c4;
+  font-size: 10px;
+  font-family: AvenirLTStd-Light;
+}
+
+.one-line {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+}
+
+.recommended-product {
+  min-height: 290px;
+  justify-content:start!important;
+}
+
+.count-center {
+  display: inline-block;
+}
+
+.horizontal-scroll {
+  width: auto;
+  max-width: auto;
+  min-width: auto;
+  overflow-y: auto;
+  overflow-x: scroll;
+}
+
+.primary {
+  color: #fab900 !important;
+}
+
+.black {
+  color: #363636;
+}
+
+.j-center {
+  justify-content:center!important;
+}
+
+@media (max-width: 575px) {
+  .mobile {
+    display: flex;
+    margin: 1rem 0rem 1rem 0rem;
+  }
+
+  img {
+    width: auto;
+  }
+
+  .mobile-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 2rem;
+  }
+
+  .small-grey-font {
+    margin-bottom: 0;
+    padding-bottom: 0.4rem;
+  }
+
+  .btn {
+    width: 145px;
+    height: 34px;
+    font-size: 12px;
+  }
+
+  .discover {
+    display: contents !important;
+    display: flex;
+    text-align: center;
+  }
+}
