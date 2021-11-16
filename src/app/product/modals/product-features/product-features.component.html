@@ -1,0 +1,18 @@
+<div class="modal-header m-4 border-bottom-0">
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="modal.dismiss()"
+  >
+    <img src="assets/images/close.svg" />
+  </button>
+</div>
+<div class="modal-body px-5">
+  <div class="container">
+    <h4 class="mb-n1">Features</h4>
+    <h2>{{ title }}</h2>
+
+    <div class="p-style-1 mt-5" [innerHTML]="description"></div>
+  </div>
+</div>

@@ -1,0 +1,114 @@
+<app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+
+<div class="fs-24 tyros-reg fab">How would you like to pay?</div>
+<div class="fs-36 tyros-reg pb-5">Payment Options</div>
+
+<div class="row pb-5">
+  <div
+    class="payment-card-mobile col-12 col-sm-4 col-md-4 col-xl-4"
+    *ngIf="creditCardSelected"
+  >
+    <div class="img-holder">
+      <img
+        (click)="onImageClicked()"
+        class="padding"
+        src="assets/images/creditcard-orange.svg"
+      />
+    </div>
+    <div class="img-holder">
+      <img (click)="onImageClicked()" src="assets/images/wiretransfer.svg" />
+    </div>
+  </div>
+
+  <div
+    class="payment-card-mobile col-12 col-sm-4 col-md-4 col-xl-4"
+    *ngIf="wireTransferSelected"
+  >
+    <div class="img-holder">
+      <img
+        (click)="onImageClicked()"
+        class="padding"
+        src="assets/images/creditcard.svg"
+      />
+    </div>
+    <div class="img-holder">
+      <img
+        (click)="onImageClicked()"
+        src="assets/images/wiretransfer-orange.svg"
+      />
+    </div>
+  </div>
+
+  <div
+    ngxStripeCardGroup
+    [formGroup]="stripe"
+    [elementsOptions]="elementsOptions"
+    class="col-12 col-sm-8 col-md-6 col-xl-4"
+    *ngIf="creditCardSelected"
+  >
+    <div class="fs-32 tyros-reg pb-3">Pay with Credit Card</div>
+    <div class="fs-24 avenir-light">
+      Please enter your card information to proceed with the final payment.
+    </div>
+
+    <div class="float-container my-3">
+      <ngx-stripe-card-number [options]="cardOptions"></ngx-stripe-card-number>
+    </div>
+
+    <div class="d-flex">
+      <div class="float-container mr-3 w-70">
+        <ngx-stripe-card-expiry
+          [options]="cardOptions"
+        ></ngx-stripe-card-expiry>
+      </div>
+      <div class="float-container w-30">
+        <ngx-stripe-card-cvc [options]="cardOptions"></ngx-stripe-card-cvc>
+      </div>
+    </div>
+
+    <button
+      class="btn btn-primary btn-lg btn-block py-3 mt-3"
+      (click)="onReviewAndPayClicked()"
+    >
+      REVIEW & PAY
+    </button>
+  </div>
+
+  <div class="col-12 col-sm-8 col-md-6 col-xl-6" *ngIf="wireTransferSelected">
+    <div class="fs-32 tyros-reg pb-3">Pay via Wiretransfer</div>
+    <div class="fs-24 avenir-light pb-3">
+      Once you review and approve your order you will receive an invoice via
+      e-mail. We will ship your order as soon as the final payment is in our
+      account.
+    </div>
+
+    <div class="grey-background">
+      <div class="pl-3">
+        <div class="pb-4 pt-2">
+          <div class="fs-20 tyros-reg">Bank Account</div>
+          <div class="fs-18 avenir-light">NL19 ABCD 1234 9876 01</div>
+        </div>
+        <div class="pb-4">
+          <div class="fs-20 tyros-reg">BIC / SWIFT Code</div>
+          <div class="fs-18 avenir-light">123they</div>
+        </div>
+        <div class="pb-2">
+          <div class="fs-20 tyros-reg">Payment ID</div>
+          <div class="fs-18 avenir-light">
+            4e4c62fd-bd91-4dd3-9694-8d5ed350cb5
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button
+      class="btn btn-primary btn-lg btn-block py-3 mt-3"
+      (click)="onReviewAndPayClicked()"
+    >
+      REVIEW & PAY
+    </button>
+  </div>
+</div>
+
+<!-- <app-order-faq></app-order-faq> -->
+<app-we-specialize></app-we-specialize>

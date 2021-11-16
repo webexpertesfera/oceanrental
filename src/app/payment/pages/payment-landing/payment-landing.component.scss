@@ -1,0 +1,121 @@
+.float-container {
+  background: #ffffff;
+  border: 1px solid black;
+  box-sizing: border-box;
+  border-radius: 3px;
+  padding: 0 8px;
+  position: relative;
+}
+
+.float-container input {
+  border: none;
+  font-size: 16px;
+  outline: 0;
+
+  /* <P Style 3> Avenir LT Std 45 Book 16 */
+  font-family: "AvenirLTStd-Book";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  color: #363636;
+}
+
+input::placeholder {
+  /* <P Style 3> Avenir LT Std 45 Book 16 */
+  font-family: "AvenirLTStd-Book";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  color: #c4c4c4;
+}
+
+.btn.btn-primary {
+  font-size: 14px;
+  max-width: 355px;
+}
+
+img {
+  width: 100%;
+  object-fit: contain;
+}
+
+.img-holder {
+  width: 145px;
+  height: 100px;
+}
+
+.padding {
+  padding: 0.3rem;
+}
+
+.grey-background {
+  background-color: #f1f1f1;
+}
+
+@media (max-width: 1200px) {
+  .btn.btn-primary {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .payment-card-mobile {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 5rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .form-control {
+    padding: 0.5rem 0.5rem;
+  }
+}
+
+h1 {
+  //styleName: <Style 1> Headline Tyros Pro SemiBold 70;
+  font-family: "TyrosPro-SemiBold";
+  font-size: 64px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 72px;
+  letter-spacing: 0px;
+  text-align: center;
+}
+
+h4 {
+  //styleName: <Style 2> Tyros Pro Medium 36;
+  font-family: "TyrosPro-Medium";
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 42px;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #fab900;
+}
+
+.p-style-2 {
+  //styleName: <P Style 2> Avenir LT Std 35 Book 24;
+  font-family: "AvenirLTStd-Book";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 30px;
+  letter-spacing: 0.11732059717178345px;
+  text-align: center;
+}
+
+h5 {
+  //styleName: <Style 5> Tyros Pro Medium 20;
+  font-family: "TyrosPro-Medium";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #fab900;
+}

@@ -1,0 +1,33 @@
+.background {
+  background-color: #19303B;
+  padding: 4rem 4rem;
+}
+
+.fab {
+  color: #FAB900;
+}
+
+.white {
+  color: white;
+}
+
+@media (max-width: 575px) {
+  .background {
+    text-align: center;
+    padding: 2rem 1rem;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .subtitle {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 380px) {
+  .fs-14 {
+    font-size: 10px;
+  }
+}

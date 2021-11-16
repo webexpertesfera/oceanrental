@@ -1,0 +1,16 @@
+[
+  {
+    "id": "fe0a-25ab",
+    "period": {
+      "start": "2021-05-04T00:00:00.000Z",
+      "end": "2021-05-07T23:59:59.000Z"
+    },
+    "location": {
+      "collection": { "id": 18805, "name": "Sarande" },
+      "delivery": { "id": 18805, "name": "Sarande" }
+    },
+    "products": [{ "id": 20, "name": "Seabob F5", "quantity": 1, "rate": 250 }],
+    "yachtName": "yacht 1",
+    "isActive": true
+  }
+]

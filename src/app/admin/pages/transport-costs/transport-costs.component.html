@@ -1,0 +1,181 @@
+<div class="container">
+  <div class="row">
+    <div class="col-4">
+      <app-location-select
+        label="Warehouse Type"
+        [locations]="warehouseTypes"
+        (locationChange)="warehouseTypeChange($event)"
+      ></app-location-select>
+    </div>
+    <div class="col-4">
+      <app-location-select
+        label="Warehouse"
+        [locations]="warehouses"
+        (locationChange)="warehouseChange($event)"
+      ></app-location-select>
+    </div>
+    <div class="col-4">
+      <app-location-select
+        label="Location"
+        [locations]="locations"
+        (locationChange)="locationChange($event)"
+      ></app-location-select>
+    </div>
+  </div>
+
+  <div *ngIf="updatedRow" class="alert alert-success" role="alert">
+    Updated {{ getWarehouseById(updatedRow["warehouseId"])?.name }}!
+  </div>
+
+  <ngx-datatable
+    #mydatatable
+    class="bootstrap"
+    [headerHeight]="50"
+    [limit]="10"
+    [columnMode]="ColumnMode.force"
+    [footerHeight]="50"
+    rowHeight="auto"
+    [rows]="rows"
+  >
+    <ngx-datatable-column name="Warehouse Type">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        {{ getWarehouseTypeById(row["warehouseTypeId"])?.abbreviation }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Warehouse">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        {{ getWarehouseById(row["warehouseId"])?.name }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Location">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        {{ getLocationById(row["locationId"])?.name }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Delay In Hours">
+      <ng-template
+        ngx-datatable-cell-template
+        let-rowIndex="rowIndex"
+        let-value="value"
+        let-row="row"
+      >
+        <span
+          title="Double click to edit"
+          (dblclick)="editing[rowIndex + '-delayInHours'] = true"
+          *ngIf="!editing[rowIndex + '-delayInHours']"
+        >
+          {{ value }}
+        </span>
+        <input
+          autofocus
+          (blur)="updateValue($event, 'delayInHours', rowIndex)"
+          *ngIf="editing[rowIndex + '-delayInHours']"
+          type="number"
+          step="1"
+          [value]="value"
+        />
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Delivery On Board">
+      <ng-template
+        ngx-datatable-cell-template
+        let-rowIndex="rowIndex"
+        let-row="row"
+        let-value="value"
+      >
+        <span
+          title="Double click to edit"
+          (dblclick)="editing[rowIndex + '-deliveryOnBoard'] = true"
+          *ngIf="!editing[rowIndex + '-deliveryOnBoard']"
+        >
+          {{ value }}
+        </span>
+        <input
+          autofocus
+          (blur)="updateValue($event, 'deliveryOnBoard', rowIndex)"
+          *ngIf="editing[rowIndex + '-deliveryOnBoard']"
+          type="number"
+          step="0.01"
+          [value]="value"
+        />
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Handling Costs">
+      <ng-template
+        ngx-datatable-cell-template
+        let-rowIndex="rowIndex"
+        let-value="value"
+        let-row="row"
+      >
+        <span
+          title="Double click to edit"
+          (dblclick)="editing[rowIndex + '-handlingCosts'] = true"
+          *ngIf="!editing[rowIndex + '-handlingCosts']"
+        >
+          {{ value }}
+        </span>
+        <input
+          autofocus
+          (blur)="updateValue($event, 'handlingCosts', rowIndex)"
+          *ngIf="editing[rowIndex + '-handlingCosts']"
+          type="number"
+          step="0.01"
+          [value]="value"
+        />
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Relocation Fees">
+      <ng-template
+        ngx-datatable-cell-template
+        let-rowIndex="rowIndex"
+        let-value="value"
+        let-row="row"
+      >
+        <span
+          title="Double click to edit"
+          (dblclick)="editing[rowIndex + '-relocationFees'] = true"
+          *ngIf="!editing[rowIndex + '-relocationFees']"
+        >
+          {{ value }}
+        </span>
+        <input
+          autofocus
+          (blur)="updateValue($event, 'relocationFees', rowIndex)"
+          *ngIf="editing[rowIndex + '-relocationFees']"
+          type="number"
+          step="0.01"
+          [value]="value"
+        />
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Shipping Costs">
+      <ng-template
+        ngx-datatable-cell-template
+        let-rowIndex="rowIndex"
+        let-value="value"
+        let-row="row"
+      >
+        <span
+          title="Double click to edit"
+          (dblclick)="editing[rowIndex + '-shippingCosts'] = true"
+          *ngIf="!editing[rowIndex + '-shippingCosts']"
+        >
+          {{ value }}
+        </span>
+        <input
+          autofocus
+          (blur)="updateValue($event, 'shippingCosts', rowIndex)"
+          *ngIf="editing[rowIndex + '-shippingCosts']"
+          type="number"
+          step="0.01"
+          [value]="value"
+        />
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
+</div>

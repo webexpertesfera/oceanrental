@@ -1,0 +1,18 @@
+<ngb-accordion *ngIf="faqs.length" #a="ngbAccordion" activeIds="custom-panel-0" class="pb-0 accordion-border" style="border-bottom: none;">
+  <ngb-panel id="custom-panel-1">
+    <ng-template ngbPanelHeader>
+      <div class="d-flex align-items-center justify-content-between">
+        <h2>{{ title }}</h2>
+        <button ngbPanelToggle class="btn btn-link btn-no-border p-0">
+          <img src="/assets/images/Vector.svg" alt="-" class="plus-image" />
+        </button>
+      </div>
+    </ng-template>
+    <ng-template ngbPanelContent>
+      <div class="pl-2 pb-2" *ngFor="let faq of faqs">
+        <h5 class="faq-title mb-1">{{ faq?.question }}</h5>
+        {{ faq?.content }}
+      </div>
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>

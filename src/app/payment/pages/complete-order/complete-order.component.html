@@ -1,0 +1,332 @@
+<div class="container">
+
+  <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+
+  <div class="fs-24 tyros-reg fab pt-2 centered block">Review & Pay</div>
+  <div class="fs-36 tyros-reg mobile">Complete your Order</div>
+  <div class="heading avenir-light pb-5 centered">Make sure everything is correct before you complete your order.</div>
+  <!-- <div class="show-on-mobile">
+    <hr />
+  </div> -->
+  <div class="my-order tyros-reg-600 pt-4 pb-3 centered">My Order</div>
+  <div class="show-on-mobile">
+    <hr />
+  </div>
+  
+  <div class="d-flex justify-content-between mobile">
+    <div class="w-50 fs-18 avenir-light">Product</div>
+    <div class="d-flex w-50">
+      <div class="fs-18 w-33 avenir-light">QTY</div>
+      <div class="fs-18 w-33 avenir-light">Availability</div>
+      <div class="fs-18 w-33 avenir-light text-center">Price</div>
+    </div>
+  </div>
+
+  <div *ngFor="let product of products" class="mobile-margin">
+    <div class="flex products-div py-3">
+      <div class="table-max">
+        <div class="text-center">
+          <img class="img" [src]="product.imageThumbnail?.url" />
+        </div>
+        <!-- <div class="mobile-flex"> -->
+          <div class="flex column">
+            <div class="product-text tyros-reg">{{ product.name }}</div>
+            <div class="product-text avenir-light grey mobile">
+              {{ product.price | number : '1.0-2' }} € / Day
+            </div>
+            <div class="product-text avenir-light show-on-mobile flex grey">
+              x 
+              <app-counter [counter]="product.quantity" [disabled]="true" [grey]="true">
+              </app-counter>
+            </div>
+            <div class="show-on-mobile product-text tyros-reg price">€{{ product.totalPrice | number : '1.0-2' }}</div>
+            <div *ngIf="product.note" class="product-text avenir-light grey mobile">
+              {{ product?.note }}
+            </div>
+          </div>
+        <!-- </div> -->
+      </div>
+
+      <div class="display-max">
+        <app-counter [counter]="product.quantity" [disabled]="true">
+        </app-counter>
+        <div class="mobile">
+          <div *ngIf="product.availabilityState === 'AVAILABLE'" class="d-flex">
+            <button *ngIf="!product.note" type="button" class="btn btn-transparent mr-2 btn-no-border" placement="top"
+              ngbPopover="This item is available for your dates." popoverTitle="Available">
+              <img class="pointer" src="assets/images/available-green.svg" />
+            </button>
+            <button *ngIf="product.note" type="button" class="btn btn-transparent mr-2 btn-no-border" placement="top"
+              ngbPopover="{{ product.note }}" popoverTitle="Available">
+              <img class="pointer" src="assets/images/available-green.svg" />
+            </button>
+          </div>
+          <div *ngIf="product.availabilityState === 'NOT_AVAILABLE'" class="d-flex">
+            <button type="button" class="btn btn-transparent mr-2 btn-no-border" placement="top"
+              ngbPopover="{{ product.note }}" popoverTitle="Not Available">
+              <img class="pointer" src="assets/images/alert-orange.svg" />
+            </button>
+          </div>
+          <div *ngIf="product.availabilityState === 'AVAILABLE_BUT_DELAYED'" class="d-flex">
+            <button type="button" class="btn btn-transparent mr-2 btn-no-border" placement="top"
+              ngbPopover="{{ product.note }}" popoverTitle="Delayed">
+              <img class="pointer" src="assets/images/alert.svg" />
+            </button>
+          </div>
+        </div>
+        <div class="fs-24 tyros-reg price">€{{ product.totalPrice | number : '1.0-2' }}</div>
+      </div>
+    </div>
+    <div class="show-on-mobile">
+      <hr />
+    </div>
+  </div>
+
+  <div class="section-heading tyros-reg-600 pt-5 pb-4 centered">Billing Details</div>
+  <div class="row d-flex justify-content-between">
+    <div class="col-12 col-md-6 d-flex flex-column" *ngIf="creditCard">
+      <div class="d-flex mobile-justify">
+        <div class="credit-padding">
+          <div class="p-heading tyros-reg pt-4 mt-1">Credit Card</div>
+          <!-- <div class="d-flex align-items-center">
+            <div class="p-text avenir-light d-flex grey">.........................</div>
+            <div class="p-text avenir-light d-flex grey">68</div>
+          </div>
+          <div class="p-text avenir-light">MM/YY</div> -->
+        </div>
+        <div class="img-holder justify-content-end">
+          <img class="padding-03" src="assets/images/creditcard.svg">
+        </div>
+      </div>
+      <!-- <div class="d-flex justify-content-start align-items-center pointer pt-5">
+        <div class="fs-14 tyros-reg">CHANGE</div>
+        <i class="fas fa-chevron-right color-primary pl-2"></i>
+      </div> -->
+    </div>
+    <div class="col-12 col-md-6 d-flex flex-column" *ngIf="wireTransfer">
+      <div class="d-flex justify-content-between">
+        <div>
+          <div class="p-heading tyros-reg pt-4 mt-1">Wire Transfer</div>
+          <!-- <div class="d-flex justify-content-start align-items-center pointer pt-2">
+            <div class="fs-14 tyros-reg">CHANGE</div>
+            <i class="fas fa-chevron-right color-primary pl-2"></i>
+          </div> -->
+        </div>
+        <img class="img" src="assets/images/wiretransfer.svg">
+      </div>
+      <div class="grey-background">
+        <div class="pl-3">
+          <div class="pb-4 pt-2">
+            <div class="p-heading tyros-reg">Bank Account</div>
+            <div class="p-text avenir-light">NL21 ABNA 0844 5432 92</div>
+          </div>
+          <div class="pb-4">
+            <div class="p-text tyros-reg">BIC / SWIFT Code</div>
+            <div class="p-text avenir-light">ABNANL2A</div>
+          </div>
+          <!-- <div class="pb-4 pt-2">
+            <div class="p-text tyros-reg">Bank Account</div>
+            <div class="p-text avenir-light">NL19 ABCD 1234 9876 01</div>
+          </div>
+          <div class="pb-4">
+            <div class="p-text tyros-reg">BIC / SWIFT Code</div>
+            <div class="p-text avenir-light">123they</div>
+          </div> -->
+          <div class="pb-2">
+            <div class="p-text tyros-reg">Payment ID</div>
+            <div class="p-text avenir-light">{{booking?.orderId}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="p-text avenir-light-300 pt-3">
+        Once you review and approve your order you will receive an
+        invoice via e-mail. We will ship your order as soon as the
+        final payment is in our account.
+      </div>
+    </div>
+    
+    <div class="show-on-mobile">
+      <hr />
+    </div>
+
+    <div class="col-12 col-md-3 d-flex flex-column">
+      <div class="section-subtitle tyros-reg">Billing Address</div>
+      <div class="p-text avenir-light">{{booking?.billingAddress}}</div>
+      <div class="p-text avenir-light">{{booking?.billingCity}}, {{booking?.billingZipCode}}</div>
+      <div class="p-text avenir-light">{{booking?.billingCountry?.name}}</div>
+      <!-- <div class="d-flex justify-content-start align-items-center pointer pt-5">
+        <div class="fs-14 tyros-reg">CHANGE</div>
+        <i class="fas fa-chevron-right color-primary pl-2"></i>
+      </div> -->
+    </div>
+  </div>
+
+  <div class="show-on-mobile">
+    <hr />
+  </div>
+
+  <div class="section-heading tyros-reg-600 pt-5 pb-4 centered">Logistics Details</div>
+  <div class="row">
+    <div class="col-12 col-md-4 d-flex flex-column">
+      <div class="section-subtitle tyros-reg">Pick Up Location</div>
+      <div class="p-text avenir-light">{{booking?.pickUpAddress}}</div>
+      <div class="p-text avenir-light">{{booking?.pickUpCity}}, {{booking?.pickUpZipCode}}</div>
+      <div class="p-text avenir-light">{{booking?.pickUpCountry?.name}}</div>
+    </div>
+    <div class="col-12 col-md-4 d-flex flex-column">
+      <div class="section-subtitle tyros-reg">Drop Off Location</div>
+      <div class="p-text avenir-light">{{booking?.dropOffAddress}}</div>
+      <div class="p-text avenir-light">{{booking?.dropOffCity}}, {{booking?.dropOffZipCode}}</div>
+      <div class="p-text avenir-light">{{booking?.dropOffCountry?.name}}</div>
+    </div>
+    <div class="col-12 col-md-4 d-flex flex-column">
+      <div class="section-subtitle tyros-reg">Contact Information</div>
+      <div class="p-text avenir-light">{{booking?.email}}</div>
+      <div class="p-text avenir-light">{{booking?.phone}}</div>
+    </div>
+  </div>
+  <!-- <div class="d-flex align-items-center pointer pt-3">
+    <div class="fs-14 tyros-reg">CHANGE</div>
+    <i class="fas fa-chevron-right color-primary pl-2"></i>
+  </div> -->
+
+  <div *ngIf="availability" class="card px-5 py-5 mt-5">
+    <div class="fs-24 tyros-reg centered">Booking Details</div>
+    <hr class="my-5" />
+
+    <div class="row">
+      <div class="col-lg-4 avenir-light">Rental Period</div>
+      <div class="col-lg-8 avenir-light text-right">{{ rentalPeriod }}</div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4 avenir-light">Delivery</div>
+      <div class="col-lg-8 avenir-light text-right">
+        {{ booking?.period?.fromDate?.day }}.{{
+        booking?.period?.fromDate?.month
+        }}.{{ booking?.period?.fromDate?.year }}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 avenir-light"></div>
+      <div class="col-lg-8 avenir-light text-right">
+        {{ booking?.location?.delivery?.name }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4 avenir-light">Collection</div>
+      <div class="col-lg-8 avenir-light text-right">
+        {{ booking?.period?.toDate?.day }}.{{
+        booking?.period?.toDate?.month
+        }}.{{ booking?.period?.toDate?.year }}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 avenir-light"></div>
+      <div class="col-lg-8 avenir-light text-right">
+        {{ booking?.location?.collection?.name }}
+      </div>
+    </div>
+
+    <hr class="my-5" />
+
+    <div *ngFor="let p of booking?.products; let i = index">
+      <div class="row">
+        <div class="col-lg-4 avenir-light">{{ i === 0 ? "Items" : "" }}</div>
+        <div class="col-lg-8 avenir-light text-right">
+          {{ p.quantity }} x {{ p.name }}
+        </div>
+      </div>
+
+      <div *ngFor="let a of p.accessories">
+        <div class="row">
+          <div class="col-lg-4 avenir-light"></div>
+          <div class="col-lg-8 avenir-light text-right">
+            {{ a.quantity }} x {{ a.name }}
+          </div>
+        </div>
+      </div>
+      <br />
+    </div>
+
+    <hr class="my-5" />
+
+    <div class="justify-content-between row ml-0 mr-0">
+      <div class="avenir-light">
+        Logistics Fees
+        <button *ngIf="!this.show" class="btn" (click)="toggle()">
+          <img src="/assets/images/nav-arrow-right.svg" alt="-" />
+        </button>
+        <button *ngIf="this.show" class="btn rotate-img-90" (click)="toggle()">
+          <img src="/assets/images/nav-arrow-right.svg" alt="-" />
+        </button>
+      </div>
+      <div class="mr-0 avenir-light">€{{ logisticsFee | number: "1.2" }}</div>
+    </div>
+
+    <div *ngIf="this.show" class="pl-2 pb-2">
+      <div class="row">
+        <div class="col-lg-4 avenir-light grey">Delivery & Pickup</div>
+        <div class="col-lg-8 avenir-light grey text-right">
+          €{{ availability?.totalDeliveryOnBoard }}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4 avenir-light grey">Shipping</div>
+        <div class="col-lg-8 avenir-light grey text-right">
+          €{{ availability?.totalShippingCosts | number : '1.0-2' }}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4 avenir-light grey">Relocation</div>
+        <div class="col-lg-8 avenir-light grey text-right">
+          €{{ availability?.totalRelocationFees | number : '1.0-2' }}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4 avenir-light grey">Handling</div>
+        <div class="col-lg-8 avenir-light grey text-right">
+          €{{ availability?.totalHandlingCosts | number : '1.0-2' }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4 avenir-light">VAT as 0%*</div>
+      <div class="col-lg-8 avenir-light text-right">€0.00</div>
+    </div>
+
+    <hr class="my-5" />
+
+    <div class="row">
+      <div class="col-lg-4 avenir-light">TOTAL FOR PAYMENT</div>
+      <div class="col-lg-8 avenir-light text-right">
+        €{{ availability?.grandTotalPrice | number : '1.0-2' }}
+      </div>
+    </div>
+
+    <hr class="my-5" />
+
+    <div class="section-subtitle avenir-light right">
+      Your booking is reserved for the next 48 hours. <br />
+      To complete your Booking, please provide us with a proof of
+      payment within the 48 hours.
+    </div>
+
+    <div class="d-flex justify-content-end" (click)="onCompleteBookingClicked()">
+      <button id="complete-booking" class="btn btn-primary btn-lg py-3 mt-3">
+        Complete Booking
+      </button>
+    </div>
+  </div>
+
+
+  <!-- <app-order-faq></app-order-faq> -->
+  <app-we-specialize></app-we-specialize>
+
+
+</div>

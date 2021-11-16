@@ -1,0 +1,102 @@
+.card {
+  //display: none;
+}
+
+.btn {
+  width: 200px;
+  height: 44px;
+  font-size: 14px;
+}
+
+.small-grey-font {
+  color: #C4C4C4;
+  font-size: 14px;
+  font-family: AvenirLTStd-Light;
+} 
+
+.flex-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.img {
+  display: flex;
+  justify-content: center;
+  width: 40%;
+  object-fit: contain;
+}
+
+.array-number {
+  font-size: 30px;
+}
+
+.plus {
+  width: 17px;
+}
+
+.h-64 {
+  height: 64px;
+}
+
+.img-2 {
+  width: 80%;
+}
+
+.img-3 {
+  width: 90%;
+}
+
+@media (max-width: 1200px) {
+  .first {
+    display: none !important;
+  }
+
+  .card {
+    display: contents;
+  }
+
+  .counter-2 {
+    display: none !important;
+  }
+
+  .display {
+    display: contents;
+  }
+}
+
+@media (max-width: 767px) {
+  .btn {
+    width: 100%;
+  }
+
+  .mobile {
+    display: none !important;
+  }
+
+  .counter-1 {
+    display: none !important;
+  }
+
+  .counter-2 {
+    display: contents !important;
+  }
+
+  .img-3 {
+    width: 100%;
+  }
+}
+
+@media (max-width: 575px) {
+  .col-4 {
+    padding-left: 0;
+  }
+
+  .img {
+    width: 9vw;
+  }
+
+  .plus-sign {
+    width: 17px;
+  }
+}

@@ -1,0 +1,159 @@
+.card {
+  box-shadow: 0px 0px 50px rgba(196, 196, 196, 0.3);
+  border-radius: 2px;
+  border: none;
+}
+
+.available {
+  object-fit: contain;
+  max-height: 24px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+#custom-panel {
+  border-bottom: 0px solid white !important;
+}
+#custom-panel-1-header {
+  padding: 0rem !important;
+}
+
+.rotate-img-90 {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.flex {
+  display: flex;
+}
+
+@media screen and (min-width: 768px) {
+  .price {
+    width: 140px;
+    max-width: 140px;
+    text-align: right;
+  }
+
+  .column {
+    width: 360px;
+    max-width: 360px;
+  }
+
+  .products-div {
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-shadow {
+    padding: 0;
+    box-shadow: 0px 0px 0px rgba(196, 196, 196, 0.3);
+  }
+  .table-max {
+    width: 50%;
+    display: flex;
+  }
+
+  .img {
+    object-fit: contain;
+    max-height: 80px;
+    width: 110px;
+    max-width: 110px;
+  }
+
+  .mobile-icon{
+    display:none!important;
+  }
+
+  .show-on-mobile{
+    display: none!important;
+  }
+
+  #layout {
+    width: 90%;
+  }
+
+  .w33 {
+    width: 33%;
+  }
+
+  .display-max {
+    display: flex;
+    width: 50%;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 1000px) {
+  .column {
+    width: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .price {
+    width: 130px;
+    max-width: 130px;
+    text-align: left;
+  }
+
+  .column {
+    width: 400px;
+    max-width: 400px;
+  }
+
+  .products-div {
+    align-items: left;
+    flex-direction: column;
+  }
+
+  .mobile {
+    display: none !important;
+  }
+
+  .mobile-flex{
+    display:flex;
+    padding-bottom: 1rem;
+  }
+
+  .display-max {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .img {
+    object-fit: contain;
+    max-width: 85%;
+  }
+
+  .card-shadow {
+    padding: 1rem;
+    box-shadow: 0px 0px 50px rgba(196, 196, 196, 0.3);
+  }
+
+  .mobile-margin{
+    margin-top:1rem;
+    margin-bottom: 1rem;
+  }
+
+  .mobile-icon{
+    text-align: right;
+  }
+
+  .show-on-mobile{
+    text-align: left;
+  }
+
+  .centered {
+    text-align: center;
+  }
+
+  .btn-flex-auto {
+    flex: auto;
+  }
+}

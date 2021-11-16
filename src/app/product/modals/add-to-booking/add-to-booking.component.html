@@ -1,0 +1,59 @@
+<div class="modal-header m-4 border-bottom-0">
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="modal.dismiss()"
+  >
+    <img src="assets/images/close.svg" />
+  </button>
+</div>
+<div class="modal-body">
+  <h4 class="text-center">Add to a Booking</h4>
+
+  <button
+    class="btn btn-shadow btn-transparent btn-lg btn-block py-3 my-3"
+    (click)="modal.dismiss('create-booking')"
+  >
+    Create a New Booking
+  </button>
+
+  <h4 *ngIf="bookings.length > 0" class="text-center mt-3">Add to existing Booking</h4>
+
+  <hr *ngIf="bookings.length > 0" />
+
+  <div
+    *ngFor="let b of bookings; index as i"
+    (click)="bookingClick(b)"
+    class="pointer px-0"
+  >
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-2 align-self-center pr-0">
+          <img class="pl-2" src="assets/images/fish-orange.svg" />
+        </div>
+        <div class="col-10 pl-0">
+          <p *ngIf="b.yachtName" class="p-style-4 pb-0 mb-0">
+            {{ b.yachtName }}
+          </p>
+          <p *ngIf="!b.yachtName" class="p-style-4 pb-0 mb-0">
+            Booking # {{ i + 1 }}
+          </p>
+          <p class="p-style-2 pb-0 mb-0">
+            {{ b.location?.collection?.name }} -
+            {{ b.location?.delivery?.name }}
+          </p>
+          <p class="p-style-2 pb-0 mb-0">
+            {{ b.period?.fromDate?.day }}.{{ b.period?.fromDate?.month }}.{{
+              b.period?.fromDate?.year
+            }}
+            - {{ b.period?.toDate?.day }}.{{ b.period?.toDate?.month }}.{{
+              b.period?.toDate?.year
+            }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="i + 1 !== bookings.length" class="dropdown-divider"></div>
+  </div>
+</div>

@@ -1,0 +1,198 @@
+<div class="container">
+  <div class="mb-3">
+    <div
+      class="select-container py-1"
+      (click)="$event.stopPropagation(); openLocationSelect()"
+    >
+      <label class="mb-n1 pl-3 mt-2">Products</label>
+
+      <div ngbDropdown #locationSelect="ngbDropdown" class="mt-n1 mb-2">
+        <button *ngIf="!isTyping" class="btn btn-lg p-0 pl-3" type="button">
+          {{ product?.name }}
+        </button>
+
+        <input
+          id="locationSelectInput"
+          #locationSearchInput
+          (click)="$event.stopPropagation(); openLocationSelect()"
+          *ngIf="isTyping"
+          type="text"
+          autocomplete="new-field-1"
+          class="form-control btn-no-border"
+          [(ngModel)]="productSearch"
+          (keyup)="productSearchChange()"
+        />
+        <div class="location-dropdown-menu mt-3" ngbDropdownMenu>
+          <!-- <div>
+            <h1 class="water-toy-location-asker">
+              Where do you want the Water Toy to be Delivered to?
+            </h1>
+          </div> -->
+
+          <div
+            *ngFor="let product of filteredProducts"
+            ngbDropdownItem
+            class="drop-down-item-1"
+            (click)="$event.stopPropagation(); productClick(product)"
+          >
+            <p>
+              <!-- <img
+                src="/assets/images/location.svg"
+                alt="-"
+                class="location-image"
+              /> -->
+              {{ product.name }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-lg-3">
+      <div class="form-group">
+        <app-location-select
+          label="DELIVERY LOCATION"
+          [locations]="locations"
+          [showDeliver]="true"
+          [(location)]="booking.location.delivery"
+        ></app-location-select>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="form-group">
+        <app-location-select
+          label="COLLECTION LOCATION"
+          [locations]="locations"
+          [showCollect]="true"
+          [(location)]="booking.location.collection"
+        ></app-location-select>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="form-group">
+        <div
+          class="float-container"
+          [class.disabled]="
+            !booking.location.collection || !booking.location.delivery
+          "
+        >
+          <label class="ml-n1 date-label">Delivery Date</label>
+          <input
+            [disabled]="
+              !booking.location.collection || !booking.location.delivery
+            "
+            #dpFromDate
+            (click)="datepicker.toggle()"
+            class="form-control mt-2 btn-no-border date-input"
+            placeholder="yyyy-mm-dd"
+            name="dpFromDate"
+            [value]="
+              fromDate?.day + ' / ' + fromDate?.month + ' / ' + fromDate?.year
+            "
+            (input)="fromDate = validateInput(fromDate, dpFromDate.value)"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="form-group">
+        <div
+          class="float-container"
+          [class.disabled]="
+            !booking.location.collection || !booking.location.delivery
+          "
+        >
+          <label class="ml-n1 date-label">Collection Date</label>
+          <input
+            [disabled]="
+              !booking.location.collection || !booking.location.delivery
+            "
+            #dpToDate
+            (click)="datepicker.toggle()"
+            class="form-control mt-2 btn-no-border date-input"
+            placeholder="yyyy-mm-dd"
+            name="dpToDate"
+            [value]="toDate?.day + ' / ' + toDate?.month + ' / ' + toDate?.year"
+            (input)="toDate = validateInput(toDate, dpToDate.value)"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group hidden">
+    <div class="input-group">
+      <input
+        name="datepicker"
+        class="form-control btn-no-border"
+        ngbDatepicker
+        #datepicker="ngbDatepicker"
+        [autoClose]="'outside'"
+        (dateSelect)="onDateSelection($event)"
+        [displayMonths]="2"
+        [dayTemplate]="t"
+        outsideDays="hidden"
+        [minDate]="minDate"
+        [startDate]="fromDate!"
+        [datepickerClass]="'custom-datepicker'"
+        [disabled]="
+          !booking.location.collection ||
+          !booking.location.delivery ||
+          loadingAvailability
+        "
+        tabindex="-1"
+        navigation="arrows"
+        [weekdays]="true"
+        (navigate)="navigate($event.current, $event.next)"
+      />
+      <ng-template #t let-date let-focused="focused" let-disabled="disabled">
+        <span
+          class="custom-day"
+          [class.focused]="focused"
+          [class.range]="isRange(date)"
+          [class.faded]="isHovered(date) || isInside(date)"
+          [class.unavailable]="isUnavailable(date)"
+          [class.first]="isFirst(date)"
+          [class.last]="isLast(date)"
+          [class.disabled]="isUnavailable(date) || disabled"
+          (mouseenter)="hoveredDate = date"
+          (mouseleave)="hoveredDate = null"
+        >
+          {{ date.day }}
+        </span>
+      </ng-template>
+    </div>
+  </div>
+  <div class="text-right mb-3">
+    <button
+      id="product-page-add-to-booking"
+      class="btn btn-primary btn-lg py-3"
+      (click)="checkGeneralAvailability(); availabilityGraph()"
+    >
+      Check Availability
+    </button>
+  </div>
+  <div>
+    <ngx-datatable
+      #mydatatable
+      class="bootstrap"
+      [headerHeight]="50"
+      [limit]="10"
+      [columnMode]="ColumnMode.force"
+      [footerHeight]="50"
+      rowHeight="auto"
+      [rows]="datesAvailable"
+    >
+      <ngx-datatable-column name="Date">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          {{ row["date"].day }}/{{ row["date"].month }}/{{ row["date"].year }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Availability">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          {{ row["available"] == true ? "Available" : "Not Available" }}
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </div>
+</div>

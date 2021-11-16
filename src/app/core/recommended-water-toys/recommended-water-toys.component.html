@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row mt-4 align-items-center horizontal-scroll recommended-toy">
+    <div *ngFor="let toy of toys" class="text-center row d-flex my-3 mx-3">
+      <div class="mobile pointer card" (click)="toyClick.emit(toy)">
+        <div class="d-flex img-height">
+          <img class="img-fluid" [src]="toy.icon?.url" />
+        </div>
+        <div class="mobile-right">
+          <div class="fs-22 tyros-reg-600 one-line">{{ toy.name }}</div>
+          <p class="small-grey-font">Daily Rental from</p>
+          <div class="fs-18 tyros-reg">{{ toy.price }} €</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <span>
+        <div class="d-flex justify-content-flex-end pt-2">
+            <p class="nav-item" routerLink="/">DISCOVER MORE</p>
+            <img class="pointer arrow pb-3"  src="/assets/images/nav-arrow-right-orange.svg"/>
+        </div>
+    </span> -->
+</div>

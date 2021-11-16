@@ -1,0 +1,32 @@
+<nav>
+  <ol class="breadcrumb bg-transparent">
+    <li class="breadcrumb-item mr-2">
+      <div class="pointer" (click)="back()">
+        <img class="mobile mb-1" src="assets/images/nav-arrow-left.svg" />
+      </div>
+    </li>
+    <li
+      *ngFor="let breadcrumb of breadcrumbs"
+      class="breadcrumb-item"
+      [ngClass]="{ active: breadcrumb.active }"
+    >
+      <a
+        *ngIf="breadcrumb.disabled === false && breadcrumb.absolutePath"
+        [href]="breadcrumb.absolutePath"
+        [ngClass]="{ disabled: breadcrumb.disabled }"
+        >{{ breadcrumb.label }}</a
+      >
+      <a
+        *ngIf="breadcrumb.disabled === false && breadcrumb.path"
+        [routerLink]="breadcrumb.path"
+        [ngClass]="{ disabled: breadcrumb.disabled }"
+        >{{ breadcrumb.label }}</a
+      >
+      <a
+        *ngIf="breadcrumb.disabled"
+        [ngClass]="{ disabled: breadcrumb.disabled }"
+        >{{ breadcrumb.label }}</a
+      >
+    </li>
+  </ol>
+</nav>
