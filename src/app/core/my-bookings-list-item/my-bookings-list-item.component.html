@@ -1,0 +1,166 @@
+<div
+  class="first row d-flex justify-content-between align-items-center no-gutters"
+>
+  <div class="d-flex align-items-center">
+    <div class="pr-4">
+      <img src="assets/images/close.svg" />
+    </div>
+    <div>
+      <div class="fs-24 avenir-light fw-600">{{ booking?.yachtName }}</div>
+      <div class="fs-24 avenir-light">
+        {{ booking?.location?.collection?.name }} -
+        {{ booking?.location?.delivery?.name }}
+      </div>
+      <div class="fs-24 avenir-light">
+        {{ booking?.period?.fromDate?.day }}.{{
+          booking?.period?.fromDate?.month
+        }}.{{ booking?.period?.fromDate?.year }} -
+        {{ booking?.period?.toDate?.day }}.{{
+          booking?.period?.toDate?.month
+        }}.{{ booking?.period?.toDate?.year }}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-6" *ngIf="booking?.products?.length == 1">
+    <div
+      class="row no-gutters d-flex justify-content-center align-items-center px-3"
+      *ngIf="booking?.products"
+    >
+      <div class="col center">
+        <img
+          *ngIf="booking && booking?.products && booking?.products!.length > 0"
+          class="img"
+          [src]="booking?.products![0].imageThumbnail?.url"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="col-6" *ngIf="booking?.products?.length == 2">
+    <div
+      class="row no-gutters d-flex justify-content-center align-items-center px-3"
+      *ngIf="booking?.products"
+    >
+      <div class="col center">
+        <img
+          class="img-2"
+          *ngIf="booking?.products!.length > 0"
+          [src]="booking?.products![0].imageThumbnail?.url"
+        />
+      </div>
+      <img
+        class="plus"
+        *ngIf="booking?.products!.length > 1"
+        src="assets/images/plus.svg"
+      />
+      <div class="col center" *ngIf="booking?.products!.length > 1">
+        <img class="img-2" [src]="booking?.products![1].imageThumbnail?.url" />
+      </div>
+    </div>
+  </div>
+
+  <div class="col-6" *ngIf="booking?.products!.length > 2">
+    <div
+      class="row no-gutters d-flex justify-content-center align-items-center px-3"
+      *ngIf="booking?.products"
+    >
+      <div class="col center">
+        <img
+          class="img-3"
+          *ngIf="booking && booking?.products && booking?.products!.length > 0"
+          [src]="booking?.products![0].imageThumbnail?.url"
+        />
+      </div>
+      <img
+        class="plus"
+        *ngIf="booking?.products!.length > 1"
+        src="assets/images/plus.svg"
+      />
+      <div class="col center" *ngIf="booking?.products!.length > 1">
+        <img class="img-3" [src]="booking?.products![1].imageThumbnail?.url" />
+      </div>
+      <img
+        class="plus"
+        *ngIf="booking?.products!.length > 2"
+        src="assets/images/plus.svg"
+      />
+      <div class="col center" *ngIf="booking?.products!.length > 2">
+        <img class="img-3" [src]="booking?.products![2].imageThumbnail?.url" />
+      </div>
+      <div class="center" *ngIf="booking?.products!.length > 3">
+        <img class="plus" src="assets/images/plus.svg" />
+        <div class="fs-30 pl-2 tyros-reg">
+          {{ booking?.products!.length - 3 }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex-right">
+    <div class="fs-24 tyros-reg">
+      €{{ booking?.availability?.grandTotalPriceWithVat }}
+    </div>
+    <p class="small-grey-font">Total excl. Security Deposit</p>
+    <button class="btn btn-primary btn-block" (click)="manageButtonClicked()">
+      MANAGE
+    </button>
+  </div>
+</div>
+
+<!-- <div class="card">
+  <div class="card-body">
+    <img class="pb-3" src="assets/images/close.svg">
+    <div class="fs-24 avenir-light fw-600">Yacht Name | Greece - Capri</div>
+    <div class="fs-24 avenir-light">16.03.2021 - 28.03.2021</div>
+
+    <div class="display col-6" *ngIf="this.currentProductBookings.length == 1">
+      <div class="row no-gutters d-flex justify-content-center align-items-center px-3" *ngIf="this.currentProductBookings">
+        <div class="col center">
+          <img *ngIf="this.currentProductBookings.length > 0" class="img" [src]="currentProductBookings[0].imageThumbnail?.url">
+        </div>
+      </div>
+    </div>
+  
+    <div class="display col-6" *ngIf="this.currentProductBookings.length == 2">
+      <div class="row no-gutters d-flex justify-content-center align-items-center px-3" *ngIf="this.currentProductBookings">
+        <div class="col center">
+          <img class="img-2" *ngIf="this.currentProductBookings.length > 0" [src]="currentProductBookings[0].imageThumbnail?.url">
+        </div>
+        <img class="plus" *ngIf="this.currentProductBookings.length > 1" src="assets/images/plus.svg">
+        <div class="col center" *ngIf="currentProductBookings.length > 1">
+          <img class="img-2" [src]="currentProductBookings[1].imageThumbnail?.url">
+        </div>
+      </div>
+    </div>
+  
+    <div class="display col-6" *ngIf="this.currentProductBookings.length > 2">
+      <div class="row no-gutters d-flex justify-content-center align-items-center px-3" *ngIf="this.currentProductBookings">
+        <div class="mobile col center">
+          <img class="img-3" *ngIf="this.currentProductBookings.length > 0" [src]="currentProductBookings[0].imageThumbnail?.url">
+        </div>
+        <img class="mobile plus" *ngIf="this.currentProductBookings.length > 1" src="assets/images/plus.svg">
+        <div class="col center" *ngIf="currentProductBookings.length > 1">
+          <img class="img-3" [src]="currentProductBookings[1].imageThumbnail?.url">
+        </div>
+        <img class="plus" *ngIf="this.currentProductBookings.length > 2" src="assets/images/plus.svg">
+        <div class="col center" *ngIf="currentProductBookings.length > 2">
+          <img class="img-3" [src]="currentProductBookings[2].imageThumbnail?.url">
+        </div>
+        <div class="center" *ngIf="this.currentProductBookings.length > 3"> 
+          <img class="plus" src="assets/images/plus.svg">
+          <div class="counter-1 fs-30 pl-2 tyros-reg">{{ this.currentProductBookings.length - 3 }}</div>
+          <div class="counter-2 fs-30 pl-2 tyros-reg">{{ this.currentProductBookings.length - 2 }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column align-items-end justify-content-end">
+      <div class="fs-24 tyros-reg">€7,130.00</div>
+      <p class="small-grey-font">Total excl. Security Deposit</p>
+      <button class="btn btn-primary btn-block" (click)="manageButtonClicked()">MANAGE</button>
+    </div>
+  </div>
+</div>
+
+<hr class="mb-5"> -->

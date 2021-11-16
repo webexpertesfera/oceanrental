@@ -1,0 +1,18 @@
+<ul class="nav">
+  <li *ngIf="!disabled" class="nav-item">
+    <button [disabled]="disabled" class="btn btn-transparent  btn-no-border px-0 mr-2 py-2" (click)="minus()">
+      <img src="assets/images/minus.svg" />
+    </button>
+  </li>
+  <li *ngIf="!grey" class="nav-item d-flex align-items-center justify-content-center">
+    <div class="counter-number">{{ counter }}</div>
+  </li>
+  <li *ngIf="grey" class="nav-item d-flex align-items-center justify-content-center">
+    <div class=".counter-number-grey">{{ counter }}</div>
+  </li>
+  <li *ngIf="!disabled" class="nav-item">
+    <button [disabled]="disabled" class="btn btn-transparent  btn-no-border px-0 ml-2 py-2" (click)="plus()">
+      <img src="assets/images/small-plus.svg" />
+    </button>
+  </li>
+</ul>

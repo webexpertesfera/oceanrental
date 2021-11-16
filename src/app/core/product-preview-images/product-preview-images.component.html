@@ -1,0 +1,41 @@
+<div
+  class="row no-gutters d-flex justify-content-center align-items-center"
+  *ngIf="products"
+>
+  <div class="col center">
+    <div *ngIf="products.length == 1" class="img-start">
+      <img class="img" [src]="products[0].imageThumbnail?.url" />
+    </div>
+    <img
+      *ngIf="products.length > 1"
+      class="img"
+      [src]="products[0].imageThumbnail?.url"
+    />
+  </div>
+  <img
+    class="plus-sign"
+    *ngIf="products.length > 1"
+    src="assets/images/plus.svg"
+  />
+  <div class="col center" *ngIf="products.length > 1">
+    <img class="img" [src]="products[1].imageThumbnail?.url" />
+  </div>
+  <img
+    class="plus-sign"
+    *ngIf="products.length > 2"
+    src="assets/images/plus.svg"
+  />
+  <div class="col center" *ngIf="products.length > 2">
+    <img class="img" [src]="products[2].imageThumbnail?.url" />
+  </div>
+  <img
+    class="plus-sign"
+    *ngIf="products.length > 3"
+    src="assets/images/plus.svg"
+  />
+  <div class="center" *ngIf="products.length > 3">
+    <div class="fs-60 array-number pl-2 tyros-reg">
+      {{ products.length - 3 }}
+    </div>
+  </div>
+</div>

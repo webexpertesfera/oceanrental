@@ -1,0 +1,79 @@
+.select-container {
+  background: #ffffff;
+  border: 1px solid #c4c4c4;
+  box-sizing: border-box;
+  border-radius: 3px;
+  position: relative;
+  cursor: pointer;
+}
+
+.select-container button {
+  border: none;
+  font-size: 16px;
+  outline: 0;
+
+  -moz-appearance: none;
+  -webkit-appearance: none;
+
+  /* <P Style 3> Avenir LT Std 45 Book 16 */
+  font-family: "AvenirLTStd-Book";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  color: #363636;
+}
+
+label {
+  font-family: "TyrosPro-Medium";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 14px;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+  color: #19303b;
+}
+
+.grey {
+  color: #c4c4c4 !important;
+}
+
+.new-booking {
+  font-family: "TyrosPro-Medium";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
+.booking-dropdown-menu {
+  width: 100%;
+}
+
+.dropdown-divider {
+  margin: 0.5rem 1.2rem !important;
+}
+
+.p-style-2 {
+  /* <Mobile P Style 2> Avenir LT Std 35 Light 18 */
+  font-family: "AvenirLTStd-Light";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: 0.117321px;
+  color: #363636;
+}
+
+.p-style-4 {
+  /* <Mobile Style 4> Tyros Pro SemiBold 16 */
+  font-family: "TyrosPro-SemiBold";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  color: #19303b;
+}

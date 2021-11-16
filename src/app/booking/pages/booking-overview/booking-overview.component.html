@@ -1,0 +1,418 @@
+<div class="container">
+  <div class="fs-36 tyros-reg mt-5 mb-2 centered">
+    {{ booking?.yachtName || "My Booking" }} |
+    {{ booking?.location?.delivery?.name }} -
+    {{ booking?.location?.collection?.name }}
+  </div>
+  <div class="fs-24 avenir-light mb-2 centered">
+    {{ booking?.period?.fromDate?.day }}.{{
+      booking?.period?.fromDate?.month
+    }}.{{ booking?.period?.fromDate?.year }} -
+    {{ booking?.period?.toDate?.day }}.{{ booking?.period?.toDate?.month }}.{{
+      booking?.period?.toDate?.year
+    }}
+  </div>
+  <div class="fs-18 avenir-light mb-2 mobile">
+    <b>Availability Check:&nbsp;</b>
+    <ng-template [ngIf]="!loadingAvailabilityCheck">{{
+      lastAvailabilityCheck
+    }}</ng-template>
+    <ng-template [ngIf]="loadingAvailabilityCheck">Loading...</ng-template>
+  </div>
+
+  <button
+    [disabled]="loadingAvailabilityCheck"
+    class="btn btn-secondary px-5 mb-5 mobile"
+    (click)="recheckAvailability(true)"
+  >
+    RECHECK AVAILABILITY
+    <img class="ml-3" src="assets/images/history-orange.svg" />
+  </button>
+
+  <div class="d-flex justify-content-end">
+    <button class="btn btn-lg btn-secondary px-5 mb-2 mobile">SHARE</button>
+    <button class="btn btn-lg btn-secondary px-5 mx-2 mb-2 mobile">
+      PRINT QUOTATION
+    </button>
+    <button
+      id="booking-checkout"
+      class="btn btn-lg btn-primary px-5 mb-2 btn-flex-auto"
+      [disabled]="!isValid()"
+      routerLink="checkout"
+    >
+      CHECKOUT
+    </button>
+  </div>
+
+  <div class="mobile">
+    <hr />
+  </div>
+
+  <div class="d-flex justify-content-between mobile">
+    <div class="w-50 fs-18 avenir-light">Product</div>
+    <div class="d-flex w-50">
+      <div class="fs-18 w-33 avenir-light">QTY</div>
+      <div class="fs-18 w-33 avenir-light">Availability</div>
+      <div class="fs-18 w-33 avenir-light text-center">Price</div>
+    </div>
+  </div>
+
+  <div class="mobile">
+    <hr />
+  </div>
+
+  <div *ngFor="let product of products" class="mobile-margin">
+    <div class="card-shadow flex products-div py-3">
+      <div class="table-max">
+        <div class="pr-4">
+          <img
+            class="pointer"
+            (click)="removeProductFromBooking(product)"
+            src="assets/images/close.svg"
+          />
+        </div>
+        <div class="text-center">
+          <img class="img" [src]="product.imageThumbnail?.url" />
+        </div>
+        <div class="mobile-flex">
+          <div class="flex column">
+            <div class="fs-24 tyros-reg">{{ product.name }}</div>
+            <div class="fs-18 avenir-light grey">
+              {{ product.price | number : '1.0-2' }} € / Day
+            </div>
+            <div *ngIf="product.note" class="fs-18 avenir-light grey mobile">
+              {{ product?.note }}
+            </div>
+          </div>
+          <div class="mobile-icon">
+            <div
+              *ngIf="product.availabilityState === 'AVAILABLE'"
+              class="d-flex"
+            >
+              <button
+                *ngIf="!product.note"
+                type="button"
+                class="btn btn-transparent btn-no-border mr-2"
+                placement="left"
+                ngbPopover="This item is available for your dates."
+                popoverTitle="Available"
+              >
+                <img class="pointer" src="assets/images/available-green.svg" />
+              </button>
+
+              <button
+                *ngIf="product.note"
+                type="button"
+                class="btn btn-transparent btn-no-border mr-2"
+                placement="left"
+                ngbPopover="{{ product.note }}"
+                popoverTitle="Available"
+              >
+                <img class="pointer" src="assets/images/available-green.svg" />
+              </button>
+            </div>
+            <div
+              *ngIf="product.availabilityState === 'NOT_AVAILABLE'"
+              class="d-flex"
+            >
+              <button
+                type="button"
+                class="btn btn-transparent btn-no-border mr-2"
+                placement="left"
+                ngbPopover="{{ product.note }}"
+                popoverTitle="Not Available"
+              >
+                <img class="pointer" src="assets/images/alert-orange.svg" />
+              </button>
+            </div>
+            <div
+              *ngIf="product.availabilityState === 'AVAILABLE_BUT_DELAYED'"
+              class="d-flex"
+            >
+              <button
+                type="button"
+                class="btn btn-transparent btn-no-border mr-2"
+                placement="left"
+                ngbPopover="{{ product.note }}"
+                popoverTitle="Delayed"
+              >
+                <img class="pointer" src="assets/images/alert.svg" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="display-max">
+        <div class="show-on-mobile">
+          <div class="fs-24 tyros-reg price">€{{ product.totalPrice | number : '1.0-2' }}</div>
+        </div>
+        <div>
+          <app-counter
+            [counter]="product.quantity"
+            (counterChange)="quantityChanged(product, $event)"
+          >
+          </app-counter>
+        </div>
+        <div class="mobile">
+          <div *ngIf="product.availabilityState === 'AVAILABLE'" class="d-flex">
+            <button
+              *ngIf="!product.note"
+              type="button"
+              class="btn btn-transparent mr-2 btn-no-border"
+              placement="top"
+              ngbPopover="This item is available for your dates."
+              popoverTitle="Available"
+            >
+              <img class="pointer" src="assets/images/available-green.svg" />
+            </button>
+            <button
+              *ngIf="product.note"
+              type="button"
+              class="btn btn-transparent mr-2 btn-no-border"
+              placement="top"
+              ngbPopover="{{ product.note }}"
+              popoverTitle="Available"
+            >
+              <img class="pointer" src="assets/images/available-green.svg" />
+            </button>
+          </div>
+          <div
+            *ngIf="product.availabilityState === 'NOT_AVAILABLE'"
+            class="d-flex"
+          >
+            <button
+              type="button"
+              class="btn btn-transparent mr-2 btn-no-border"
+              placement="top"
+              ngbPopover="{{ product.note }}"
+              popoverTitle="Not Available"
+            >
+              <img class="pointer" src="assets/images/alert-orange.svg" />
+            </button>
+          </div>
+          <div
+            *ngIf="product.availabilityState === 'AVAILABLE_BUT_DELAYED'"
+            class="d-flex"
+          >
+            <button
+              type="button"
+              class="btn btn-transparent mr-2 btn-no-border"
+              placement="top"
+              ngbPopover="{{ product.note }}"
+              popoverTitle="Delayed"
+            >
+              <img class="pointer" src="assets/images/alert.svg" />
+            </button>
+          </div>
+        </div>
+        <div class="mobile">
+          <div class="fs-24 tyros-reg price">€{{ product.totalPrice | number : '1.0-2' }}</div>
+        </div>
+      </div>
+      <div *ngIf="product.note" class="show-on-mobile flex">
+        <div *ngIf="product.availabilityState === 'AVAILABLE'" class="d-flex">
+          <button
+            *ngIf="!product.note"
+            type="button"
+            class="btn btn-transparent btn-no-border mr-2"
+            placement="right"
+            ngbPopover="This item is available for your dates."
+            popoverTitle="Available"
+          >
+            <img class="pointer" src="assets/images/available-green.svg" />
+          </button>
+          <button
+            *ngIf="product.note"
+            type="button"
+            class="btn btn-transparent btn-no-border mr-2"
+            placement="right"
+            ngbPopover="{{ product.note }}"
+            popoverTitle="Available"
+          >
+            <img class="pointer" src="assets/images/available-green.svg" />
+          </button>
+        </div>
+        <div
+          *ngIf="product.availabilityState === 'NOT_AVAILABLE'"
+          class="d-flex"
+        >
+          <button
+            type="button"
+            class="btn btn-transparent btn-no-border mr-2"
+            placement="right"
+            ngbPopover="{{ product.note }}"
+            popoverTitle="Not Available"
+          >
+            <img class="pointer" src="assets/images/alert-orange.svg" />
+          </button>
+        </div>
+        <div
+          *ngIf="product.availabilityState === 'AVAILABLE_BUT_DELAYED'"
+          class="d-flex"
+        >
+          <button
+            type="button"
+            class="btn btn-transparent btn-no-border mr-2"
+            placement="right"
+            ngbPopover="{{ product.note }}"
+            popoverTitle="Delayed"
+          >
+            <img class="pointer" src="assets/images/alert.svg" />
+          </button>
+        </div>
+
+        <div class="fs-18 avenir-light grey">
+          {{ product?.note }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="availability" class="card px-5 py-5 mt-5">
+    <div class="fs-24 tyros-reg">Booking Overview</div>
+    <hr class="my-5" />
+
+    <div class="row">
+      <div class="col-lg-4 avenir-light">Rental Period</div>
+      <div class="col-lg-8 avenir-light text-right">{{ rentalPeriod }}</div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4 avenir-light">Delivery</div>
+      <div class="col-lg-8 avenir-light text-right">
+        {{ booking?.period?.fromDate?.day }}.{{
+          booking?.period?.fromDate?.month
+        }}.{{ booking?.period?.fromDate?.year }}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 avenir-light"></div>
+      <div class="col-lg-8 avenir-light text-right">
+        {{ booking?.location?.delivery?.name }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4 avenir-light">Collection</div>
+      <div class="col-lg-8 avenir-light text-right">
+        {{ booking?.period?.toDate?.day }}.{{
+          booking?.period?.toDate?.month
+        }}.{{ booking?.period?.toDate?.year }}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 avenir-light"></div>
+      <div class="col-lg-8 avenir-light text-right">
+        {{ booking?.location?.collection?.name }}
+      </div>
+    </div>
+
+    <hr class="my-5" />
+
+    <div *ngFor="let p of booking?.products; let i = index">
+      <div class="row">
+        <div class="col-lg-4 avenir-light">{{ i === 0 ? "Items" : "" }}</div>
+        <div class="col-lg-8 avenir-light text-right">
+          {{ p.quantity }} x {{ p.name }}
+        </div>
+      </div>
+
+      <div *ngFor="let a of p.accessories">
+        <div class="row">
+          <div class="col-lg-4 avenir-light"></div>
+          <div class="col-lg-8 avenir-light text-right">
+            {{ a.quantity }} x {{ a.name }}
+          </div>
+        </div>
+      </div>
+      <br />
+    </div>
+    
+    <hr class="my-5" />
+
+    <div class="justify-content-between row ml-0 mr-0">
+      <div class="avenir-light">
+        Logistics Fees
+        <button *ngIf="!this.show" class="btn" (click)="toggle()">
+          <img src="/assets/images/nav-arrow-right.svg" alt="-" />
+        </button>
+        <button *ngIf="this.show" class="btn rotate-img-90" (click)="toggle()">
+          <img src="/assets/images/nav-arrow-right.svg" alt="-" />
+        </button>
+      </div>
+      <div class="mr-0 avenir-light">€{{ logisticsFee | number: "1.2" }}</div>
+    </div>
+
+    <div *ngIf="this.show" class="pl-2 pb-2">
+      <div class="row">
+        <div class="col-lg-4 avenir-light grey">Delivery & Pickup</div>
+        <div class="col-lg-8 avenir-light grey text-right">
+          €{{ availability?.totalDeliveryOnBoard }}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4 avenir-light grey">Shipping</div>
+        <div class="col-lg-8 avenir-light grey text-right">
+          €{{ availability?.totalShippingCosts | number : '1.0-2' }}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4 avenir-light grey">Relocation</div>
+        <div class="col-lg-8 avenir-light grey text-right">
+          €{{ availability?.totalRelocationFees | number : '1.0-2' }}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4 avenir-light grey">Handling</div>
+        <div class="col-lg-8 avenir-light grey text-right">
+          €{{ availability?.totalHandlingCosts | number : '1.0-2' }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4 avenir-light">VAT as 0%*</div>
+      <div class="col-lg-8 avenir-light text-right">€0.00</div>
+    </div>
+
+    <hr class="my-5" />
+
+    <div class="row">
+      <div class="col-lg-4 avenir-light">TOTAL FOR PAYMENT</div>
+      <div class="col-lg-8 avenir-light text-right">
+        €{{ availability?.grandTotalPrice | number : '1.0-2' }}
+      </div>
+    </div>
+
+    <hr class="my-5" />
+
+    <!-- <div class="fs-24 avenir-light grey right">
+      *VAT is free if you provide a VAT number of a EU registered company for
+      shipping <br />
+      inside the European Union. Companies registered outside also get VAT free
+      for exports <br />
+      provided they share a valid VAT number.
+    </div> -->
+    <div class="d-flex justify-content-center align-items-center">
+      <button class="btn btn-lg btn-secondary px-5 mb-2 mobile">SHARE</button>
+      <button class="btn btn-lg btn-secondary px-5 mx-2 mb-2 mobile">
+        PRINT QUOTATION
+      </button>
+      <button
+        class="btn btn-lg btn-primary px-5 mb-2 btn-flex-auto"
+        [disabled]="!isValid()"
+        routerLink="checkout"
+      >
+        CHECKOUT
+      </button>
+    </div>
+  </div>
+
+  <div class="pb-4">
+    <app-we-specialize></app-we-specialize>
+  </div>
+</div>

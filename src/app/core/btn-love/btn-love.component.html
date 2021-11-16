@@ -1,0 +1,9 @@
+<button class="btn btn-transparent px-0 py-2 btn-no-border" (click)="triggerLove()">
+  <img
+    *ngIf="loved"
+    src="assets/images/heart-filled.svg"
+    width="26"
+    height="24"
+  />
+  <img *ngIf="!loved" src="assets/images/heart.svg" width="26" height="24" />
+</button>

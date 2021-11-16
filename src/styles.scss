@@ -1,0 +1,692 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import "~bootstrap/scss/bootstrap";
+
+@import "~@swimlane/ngx-datatable/index.css";
+@import "~@swimlane/ngx-datatable/themes/bootstrap.scss";
+@import "~@swimlane/ngx-datatable/assets/icons.css";
+
+/* Variables */
+$primary: #fab900;
+$secondary: #19303b;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+);
+
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+a:active {
+  text-decoration: none;
+}
+
+hr {
+  border: 1px solid #f1f1f1;
+}
+
+/* Avenir */
+@font-face {
+  font-family: "AvenirLTStd-Black";
+  src: url("assets/fonts/Avenir/AvenirLTStd-Black.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AvenirLTStd-BlackOblique";
+  src: url("assets/fonts/Avenir/AvenirLTStd-BlackOblique.otf")
+    format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AvenirLTStd-Book";
+  src: url("assets/fonts/Avenir/AvenirLTStd-Book.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AvenirLTStd-BookOblique";
+  src: url("assets/fonts/Avenir/AvenirLTStd-BookOblique.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AvenirLTStd-Heavy";
+  src: url("assets/fonts/Avenir/AvenirLTStd-Heavy.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AvenirLTStd-HeavyOblique";
+  src: url("assets/fonts/Avenir/AvenirLTStd-HeavyOblique.otf")
+    format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AvenirLTStd-Light";
+  src: url("assets/fonts/Avenir/AvenirLTStd-Light.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AvenirLTStd-LightOblique";
+  src: url("assets/fonts/Avenir/AvenirLTStd-LightOblique.otf")
+    format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AvenirLTStd-Medium";
+  src: url("assets/fonts/Avenir/AvenirLTStd-Medium.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AvenirLTStd-MediumOblique";
+  src: url("assets/fonts/Avenir/AvenirLTStd-MediumOblique.otf")
+    format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AvenirLTStd-Oblique";
+  src: url("assets/fonts/Avenir/AvenirLTStd-Oblique.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AvenirLTStd-Roman";
+  src: url("assets/fonts/Avenir/AvenirLTStd-Roman.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Tyros Pro */
+@font-face {
+  font-family: "TyrosPro-Heavy";
+  src: url("assets/fonts/Tyros/TyrosPro-Heavy.woff2") format("woff2"),
+    url("assets/fonts/Tyros/TyrosPro-Heavy.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "TyrosPro-Medium";
+  src: url("assets/fonts/Tyros/TyrosPro-Medium.woff2") format("woff2"),
+    url("assets/fonts/Tyros/TyrosPro-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "TyrosPro-Outline";
+  src: url("assets/fonts/Tyros/TyrosPro-Outline.woff2") format("woff2"),
+    url("assets/fonts/Tyros/TyrosPro-Outline.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "TyrosPro-MediumOutline";
+  src: url("assets/fonts/Tyros/TyrosPro-MediumOutline.woff2") format("woff2"),
+    url("assets/fonts/Tyros/TyrosPro-MediumOutline.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "TyrosPro-SemiBoldItalic";
+  src: url("assets/fonts/Tyros/TyrosPro-SemiBoldItalic.woff2") format("woff2"),
+    url("assets/fonts/Tyros/TyrosPro-SemiBoldItalic.woff") format("woff");
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "TyrosPro-LightItalic";
+  src: url("assets/fonts/Tyros/TyrosPro-LightItalic.woff2") format("woff2"),
+    url("assets/fonts/Tyros/TyrosPro-LightItalic.woff") format("woff");
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "TyrosPro-BoldOutline";
+  src: url("assets/fonts/Tyros/TyrosPro-BoldOutline.woff2") format("woff2"),
+    url("assets/fonts/Tyros/TyrosPro-BoldOutline.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "TyrosPro-MediumItalic";
+  src: url("assets/fonts/Tyros/TyrosPro-MediumItalic.woff2") format("woff2"),
+    url("assets/fonts/Tyros/TyrosPro-MediumItalic.woff") format("woff");
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "TyrosPro-Bold";
+  src: url("assets/fonts/Tyros/TyrosPro-Bold.woff2") format("woff2"),
+    url("assets/fonts/Tyros/TyrosPro-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "TyrosPro-BoldItalic";
+  src: url("assets/fonts/Tyros/TyrosPro-BoldItalic.woff2") format("woff2"),
+    url("assets/fonts/Tyros/TyrosPro-BoldItalic.woff") format("woff");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "TyrosPro-SemiBold";
+  src: url("assets/fonts/Tyros/TyrosPro-SemiBold.woff2") format("woff2"),
+    url("assets/fonts/Tyros/TyrosPro-SemiBold.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "TyrosPro-HeavyItalic";
+  src: url("assets/fonts/Tyros/TyrosPro-HeavyItalic.woff2") format("woff2"),
+    url("assets/fonts/Tyros/TyrosPro-HeavyItalic.woff") format("woff");
+  font-weight: 900;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "TyrosPro-Light";
+  src: url("assets/fonts/Tyros/TyrosPro-Light.woff2") format("woff2"),
+    url("assets/fonts/Tyros/TyrosPro-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "TyrosPro-Regular";
+  src: url("assets/fonts/Tyros/TyrosPro-Regular.woff2") format("woff2"),
+    url("assets/fonts/Tyros/TyrosPro-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "TyrosPro-Italic";
+  src: url("assets/fonts/Tyros/TyrosPro-Italic.woff2") format("woff2"),
+    url("assets/fonts/Tyros/TyrosPro-Italic.woff") format("woff");
+  font-weight: normal;
+  font-style: italic;
+}
+
+a {
+  //styleName: <NAV Style> Avenir LT Std 55 Roman 16;
+  font-family: "AvenirLTStd-Roman";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0.25px;
+  text-align: center;
+}
+
+.btn.btn-primary {
+  background: #fab900;
+  border-radius: 2px;
+  border-color: #fab900;
+
+  /* <Mobile BTN Style> Tyros Pro Bold 14 */
+  font-family: "TyrosPro-Regular";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 14px;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+.btn.btn-outline-secondary {
+  border: 1.5px solid #fab900;
+  border-radius: 1px;
+
+  /* <Mobile BTN Style> Tyros Pro Bold 14 */
+  font-family: "TyrosPro-Bold";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 14px;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+}
+
+.btn.btn-secondary {
+  background: #fff;
+  border-radius: 2px;
+  border-color: #fab900;
+
+  /* <Mobile BTN Style> Tyros Pro Bold 14 */
+  font-family: "TyrosPro-Bold";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 14px;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+  color: #fab900;
+}
+.btn.btn-outline-secondary {
+  border: 1.5px solid #c4c4c4;
+  border-radius: 1px;
+
+  /* <Mobile BTN Style> Tyros Pro Bold 14 */
+  font-family: "TyrosPro-Bold";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 14px;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+}
+
+.btn.btn-transparent {
+  /* <Mobile BTN Style> Tyros Pro Bold 14 */
+  font-family: "TyrosPro-Regular";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 14px;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.left {
+  text-align: start;
+}
+
+.right {
+  text-align: end;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.fab {
+  color: #fab900;
+}
+
+.black {
+  color: black;
+}
+
+.grey {
+  color: #c4c4c4 !important;
+}
+
+.light-grey {
+  color: #f1f1f1;
+}
+
+.dark-grey {
+  color: #363636;
+}
+
+.color-primary {
+  color: #fab900;
+}
+
+.tyros-reg {
+  font-family: "TyrosPro-Regular";
+}
+
+.tyros-reg-600 {
+  font-family: "TyrosPro-Regular";
+  font-weight: 600;
+}
+
+.tyros-reg-700 {
+  font-family: "TyrosPro-Regular";
+  font-weight: 700;
+}
+
+.avenir-light {
+  font-family: AvenirLTStd-Light;
+}
+
+.avenir-light-300 {
+  font-family: AvenirLTStd-Light;
+  font-weight: 300;
+}
+
+.fw-600 {
+  font-weight: 600;
+}
+
+.fs-6 {
+  font-size: 6px;
+}
+
+.fs-12 {
+  font-size: 12px;
+}
+
+.fs-14 {
+  font-size: 14px;
+}
+
+.fs-16 {
+  font-size: 16px;
+}
+
+.fs-18 {
+  font-size: 18px;
+}
+
+.fs-20 {
+  font-size: 20px;
+}
+
+.fs-22 {
+  font-size: 22px;
+}
+
+.fs-24 {
+  font-size: 24px;
+  // font-weight: normal;
+}
+
+.fs-26 {
+  font-size: 26px;
+}
+
+.fs-30 {
+  font-size: 30px;
+}
+
+.fs-32 {
+  font-size: 32px;
+}
+
+.fs-36 {
+  font-size: 36px;
+}
+
+.fs-60 {
+  font-size: 60px;
+}
+
+.fs-64 {
+  font-size: 64px;
+}
+
+.lh-68 {
+  line-height: 68px;
+}
+
+.w-325 {
+  width: 25%;
+}
+
+.w-30 {
+  width: 30%;
+}
+
+.w-33 {
+  width: 33.3%;
+}
+
+.w-50 {
+  width: 50%;
+}
+
+.w-30 {
+  width: 30%;
+}
+
+.w-70 {
+  width: 70%;
+}
+
+/* 
+  If accordions used in more places, lets move this
+  Currently used in bookings/:booking_id/checkout
+*/
+ngb-accordion {
+  .card {
+    border: 1px solid white;
+    border-bottom: 1px solid #c4c4c4 !important;
+  }
+
+  .card-header {
+    background-color: white !important;
+    border-bottom: none;
+  }
+}
+
+/*
+  If date picker used in more places, move this
+*/
+ngb-datepicker.dropdown-menu.show.custom-datepicker {
+  padding-top: 1rem !important;
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+  padding-bottom: 1rem !important;
+}
+
+.ngb-dp-header {
+  background-color: #ffffff !important;
+}
+
+.ngb-dp-month-name {
+  //styleName: <Mobile Style 4> Tyros Pro SemiBold 16;
+  font-family: "TyrosPro-SemiBold";
+  font-size: 16px;
+  font-style: normal !important;
+  font-weight: 600;
+  line-height: 22px !important;
+  letter-spacing: 0px;
+  text-align: center;
+  background-color: #ffffff !important;
+}
+
+.ngb-dp-weekdays {
+  background-color: #ffffff !important;
+  border-bottom: 0px !important;
+}
+
+.ngb-dp-weekday {
+  font-family: "AvenirLTStd-Light";
+  font-size: 14px;
+  font-style: normal !important;
+  font-weight: 700;
+  line-height: 18px !important;
+  color: #363636 !important;
+}
+
+@media only screen and (max-width: 768px) {
+  .modal-dialog {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .modal-content {
+    height: 100%;
+    position: relative;
+    min-height: 100%;
+    border-radius: 0;
+  }
+
+  .modal-body {
+    border-radius: 0;
+  }
+
+  .modal-footer {
+    border-radius: 0;
+    bottom: 0px;
+    position: absolute !important;
+    width: 100%;
+  }
+
+  .ngb-dp-day, .ngb-dp-week-number, .ngb-dp-weekday {
+    width: 3rem !important;
+  }
+}
+
+.btn-no-border{
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.accordion-border {
+  border: none !important;
+  border-bottom: none !important;
+}
+
+
+/* TODO: Fix! */
+/* Custom Ocean Premium Font Face */
+/* Note: use fontello to generate updated custom font from figma icons */
+// @font-face {
+//   font-family: "oceanpremium";
+//   src: url("assets/fonts/ocean-premium/ocean-premium.eot?47672881");
+//   src: url("assets/fonts/ocean-premium/ocean-premium.eot?47672881#iefix")
+//       format("embedded-opentype"),
+//     url("assets/fonts/ocean-premium/ocean-premium.woff2?47672881")
+//       format("woff2"),
+//     url("assets/fonts/ocean-premium/ocean-premium.woff?47672881") format("woff"),
+//     url("assets/fonts/ocean-premium/ocean-premium.ttf?47672881")
+//       format("truetype"),
+//     url("assets/fonts/ocean-premium/ocean-premium.svg?47672881#oceanpremium")
+//       format("svg");
+//   font-weight: normal;
+//   font-style: normal;
+// }
+
+// [class^="icon-"]:before,
+// [class*=" icon-"]:before {
+//   font-family: "oceanpremium";
+//   font-style: normal;
+//   font-weight: normal;
+//   speak: none;
+
+//   display: inline-block;
+//   text-decoration: inherit;
+//   width: 1em;
+//   margin-right: 0.2em;
+//   text-align: center;
+//   /* opacity: .8; */
+
+//   /* For safety - reset parent styles, that can break glyph codes*/
+//   font-variant: normal;
+//   text-transform: none;
+
+//   /* fix buttons height, for twitter bootstrap */
+//   line-height: 1em;
+
+//   /* Animation center compensation - margins should be symmetric */
+//   /* remove if not needed */
+//   margin-left: 0.2em;
+
+//   /* you can be more comfortable with increased icons size */
+//   /* font-size: 120%; */
+
+//   /* Font smoothing. That was taken from TWBS */
+//   -webkit-font-smoothing: antialiased;
+//   -moz-osx-font-smoothing: grayscale;
+
+//   /* Uncomment for 3D effect */
+//   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+// }
+
+// .icon-search:before {
+//   content: "\e800";
+// } /* '' */
+// .icon-phone:before {
+//   content: "\e801";
+// } /* '' */
+// .icon-complete:before {
+//   content: "\e802";
+// } /* '' */
+// .icon-cart:before {
+//   content: "\e803";
+// } /* '' */
+// .icon-attention:before {
+//   content: "\e804";
+// } /* '' */
+// .icon-x:before {
+//   content: "\e805";
+// } /* '' */
+// .icon-not-available:before {
+//   content: "\e806";
+// } /* '' */
+// .icon-help:before {
+//   content: "\e807";
+// } /* '' */
+// .icon-menu:before {
+//   content: "\e808";
+// } /* '' */
+// .icon-cog:before {
+//   content: "\e809";
+// } /* '' */
+// .icon-down-open:before {
+//   content: "\e80a";
+// } /* '' */
+// .icon-up-open:before {
+//   content: "\e80b";
+// } /* '' */
+
+// .icon-cart {
+//   color: $secondary;
+// }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

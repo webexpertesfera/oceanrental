@@ -1,0 +1,47 @@
+<div
+  class="form-control py-1"
+  (click)="$event.stopPropagation(); openCountrySelect()"
+>
+  <div
+    ngbDropdown
+    #countrySelect="ngbDropdown"
+    class="mt-n1 mb-2 btn-no-border"
+  >
+    <button
+      *ngIf="!isTyping"
+      class="btn-font btn btn-lg mt-2 p-0 text-left"
+      type="button"
+    >
+      {{ country?.name }}
+    </button>
+    <input
+      class="btn-no-border country-select"
+      #countrySearchInput
+      (click)="$event.stopPropagation(); openCountrySelect()"
+      *ngIf="isTyping || !country"
+      type="text"
+      name="x-field-1"
+      autocomplete="new-field-1"
+      [(ngModel)]="countrySearch"
+      (keyup)="countrySearchChange()"
+      placeholder="Country"
+    />
+    <div class="country-dropdown-menu" ngbDropdownMenu>
+      <div
+        *ngFor="let country of filteredCountries"
+        ngbDropdownItem
+        class="drop-down-item-1"
+        (click)="$event.stopPropagation(); countryClick(country)"
+      >
+        <p>
+          <img
+            src="/assets/images/location.svg"
+            alt="-"
+            class="country-image"
+          />
+          {{ country.name }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<nav class="navbar navbar-transparent mb-4">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <img src="assets/images/logo.png" height="32" />
+    </a>
+
+    <div class="d-flex justify-content-between">
+      <a *ngIf="isLoggedIn()" class="nav-item pr-5 pointer" routerLink="/auth/login">Login</a>
+      <a *ngIf="isLoggedIn()" class="nav-item pr-5 pointer" routerLink="/auth/forgot-password">Forgot Password</a>
+      <a
+        *ngIf="!isLoggedIn()"
+        class="nav-item pr-5"
+        routerLink="/auth/login"
+        routerLinkActive="active"
+        (click)="logout()"
+        >Logout</a
+      >
+      <a class="nav-item" routerLinkActive="active" routerLink="/">Rent</a>
+
+      <a class="nav-item pl-5" routerLinkActive="active" href="https://www.oceanpremium.com/store/">Buy</a>
+
+      <a class="nav-item active pl-5" routerLink="/bookings">
+        <img src="assets/images/cart.svg" />
+        &nbsp; {{ cartSize }}</a
+      >
+    </div>
+  </div>
+</nav>
+<!-- 
+<nav
+  class="navbar navbar-fixed-top navbar-toggleable-sm navbar-inverse bg-inverse"
+>
+  <div class="container d-flex flex-row flex-md-nowrap flex-wrap">
+    <a
+      href="#"
+      class="hidden-lg-up my-2 mr-3"
+      data-toggle="collapse"
+      data-target="#navbarCollapse"
+      aria-controls="navbarCollapse"
+      aria-expanded="false"
+    >
+      <i-bs name="list" width="2rem" height="2rem"></i-bs>
+    </a>
+    <a class="navbar-brand" href="#">Brand</a>
+    <div
+      class="navbar-collapse collapse flex-md-unordered flex-last"
+      id="navbarCollapse"
+    >
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="#"
+            >Link <span class="sr-only">Home</span></a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+      </ul>
+    </div>
+    <div class="d-flex ml-auto">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Right</a>
+        </li>
+      </ul>
+    </div>
+    <div class="hidden-md-up w-100"></div>
+  </div>
+</nav> -->

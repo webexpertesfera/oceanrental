@@ -1,0 +1,22 @@
+<div class="modal-header m-2 border-bottom-0">
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="modal.dismiss()"
+  >
+    <img src="assets/images/close.svg" />
+  </button>
+</div>
+<div class="modal-body m-5">
+  <h4 class="text-center mb-2">Create a New Booking</h4>
+
+  <app-booking-form
+    [(booking)]="booking"
+    [locations]="locations"
+    (addToBooking)="addToBooking($event)"
+    [showTitle]="false"
+    [showYachtName]="true"
+    [showBookingSelect]="false"
+  ></app-booking-form>
+</div>

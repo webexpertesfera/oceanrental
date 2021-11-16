@@ -1,0 +1,11 @@
+@media (max-width: 575px) {
+  .container {
+    text-align: center;
+  }
+}
+
+@media (max-width: 991px) {
+  .mobile{
+    display:none!important;
+  }
+}

@@ -1,0 +1,146 @@
+<div class="modal-header m-2 border-bottom-0 d-flex justify-content-between">
+  <button
+    type="button"
+    class="btn btn-transparent btn-no-border"
+    aria-label="Close"
+    (click)="modal.dismiss('back')"
+  >
+    <img src="assets/images/mobile-back.svg" />
+  </button>
+
+  <button
+    type="button"
+    class="close btn-no-border"
+    aria-label="Close"
+    (click)="modal.dismiss()"
+  >
+    <img src="assets/images/close.svg" />
+  </button>
+</div>
+<div class="modal-body">
+  <h4 class="text-center">Select Rental Dates</h4>
+
+  <div *ngIf="loadingAvailability" class="row">
+    <div class="col-2">
+      <img src="assets/images/alert.svg" />
+    </div>
+    <div class="col-10 m-0 p-0">
+      <h5 class="text-uppercase primary">Loading...</h5>
+      <p class="p-style-4">
+        We are checking availability for the chosen location, dates and
+        quantity.
+      </p>
+    </div>
+  </div>
+
+  <div *ngIf="!loadingAvailability">
+    <div *ngIf="availabilityState.state === 'NOT_AVAILABLE'" class="row">
+      <div class="col-2">
+        <img src="assets/images/alert.svg" />
+      </div>
+      <div class="col-10 m-0 p-0">
+        <h5 class="text-uppercase primary">Not Available</h5>
+        <p class="p-style-4">
+          {{ availabilityState.notes }}
+        </p>
+        <p class="p-style-4">
+          Please adjust location, dates or quantity to add this item to your
+          booking!
+        </p>
+      </div>
+    </div>
+    <div
+      *ngIf="availabilityState.state === 'AVAILABLE_BUT_DELAYED'"
+      class="row"
+    >
+      <div class="col-2">
+        <img src="assets/images/alert.svg" />
+      </div>
+      <div class="col-10 m-0 p-0">
+        <h5 class="text-uppercase primary">Delayed</h5>
+        <p class="p-style-4">
+          {{ availabilityState.notes }}
+        </p>
+        <p class="p-style-4">
+          Please adjust location, dates or quantity to add this item to your
+          booking!
+        </p>
+      </div>
+    </div>
+    <div *ngIf="availabilityState.state === 'AVAILABLE'" class="row">
+      <div class="col-2">
+        <img src="assets/images/available-green.svg" />
+      </div>
+      <div class="col-10 m-0 p-0">
+        <h5 class="text-uppercase black">Available</h5>
+        <p class="p-style-4">
+          This item is available for your dates.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center mt-3 pb-10">
+    <ngb-datepicker
+      #dp
+      (dateSelect)="onDateSelection($event)"
+      [displayMonths]="2"
+      [dayTemplate]="t"
+      [minDate]="minDate"
+      outsideDays="hidden"
+      navigation="arrows"
+      [weekdays]="true"
+      (navigate)="navigate($event.current, $event.next)"
+    >
+      <ng-template ngbDatepickerContent>
+        <div class="col-12" *ngFor="let month of dp.state.months">
+          <h4>{{ i18n.getMonthFullName(month.month) }} {{ month.year }}</h4>
+          <ngb-datepicker-month [month]="month"></ngb-datepicker-month>
+        </div>
+      </ng-template>
+    </ngb-datepicker>
+
+    <ng-template #t let-date let-focused="focused">
+      <span
+        class="custom-day"
+        [class.focused]="focused"
+        [class.range]="isRange(date)"
+        [class.faded]="isHovered(date) || isInside(date)"
+        [class.unavailable]="isUnavailable(date)"
+        [class.first]="isFirst(date)"
+        [class.last]="isLast(date)"
+        [class.disabled]="isUnavailable(date)"
+        (mouseenter)="hoveredDate = date"
+        (mouseleave)="hoveredDate = null"
+      >
+        {{ date.day }}
+      </span>
+    </ng-template>
+  </div>
+</div>
+<div class="modal-footer">
+  <div class="container-fluid">
+    <div class="row justify-content-between">
+      <div class="col-6">
+        <button
+          type="button"
+          class="btn btn-transparent btn-lg btn-block py-3"
+          (click)="modal.close()"
+        >
+          Clear
+        </button>
+      </div>
+
+      <div class="col-6">
+        <button
+          [disabled]="isDisabled()"
+          type="button"
+          class="btn btn-primary btn-lg btn-block py-3"
+          (click)="addToBooking()"
+        >
+          ADD TO BOOKING
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,104 @@
+.card-detail {
+  box-shadow: 0px 0px 50px rgba(196, 196, 196, 0.3);
+  border-radius: 2px;
+}
+
+.float-container {
+  background: #ffffff;
+  border: 1px solid black;
+  box-sizing: border-box;
+  border-radius: 3px;
+  padding: 0 8px;
+  position: relative;
+}
+
+.float-container input {
+  border: none;
+  font-size: 16px;
+  outline: 0;
+  font-family: "AvenirLTStd-Book";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  color: #363636;
+}
+
+input::placeholder {
+  font-family: "AvenirLTStd-Book";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  color: #363636
+}
+
+.btn.btn-primary {
+  font-size: 14px;
+}
+
+.verticle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.verticle-line {
+  border: 1px solid #F1F1F1;
+  height: 84px;
+}
+
+.img {
+  width: 100%;
+  object-fit: contain;
+}
+
+.button-size {
+  height: 60px;
+  width: 165px;
+}
+
+.white {
+  color: white;
+}
+
+@media (max-width: 992px) {
+  .row {
+    flex-direction: column-reverse;
+  }
+
+  .verticle-line {
+    width: 150px;
+    height: 1px;
+  }
+
+  .verticle {
+    flex-direction: row;
+    padding: 2rem 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .card-detail {
+    padding: 0rem 1rem;
+  }
+
+  .fs-64 {
+    font-size: 45px;
+  }
+
+  .fs-24 {
+    font-size: 16px;
+  }
+
+  .verticle-line {
+    width: 100px;
+    height: 1px;
+  }
+
+  .button-size {
+    height: 60px;
+    width: 135px;
+  }
+}
