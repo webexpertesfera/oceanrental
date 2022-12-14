@@ -69,7 +69,7 @@
     "country-state-city": "^2.1.0",
     "db-migrate": "0.11.12",
     "db-migrate-mysql": "2.1.2",
-    "express": "^4.15.2",
+    "express": "^4.17.3",
     "fuse.js": "6.4.6",
     "jsonwebtoken": "^8.5.1",
     "memory-cache": "0.2.0",
