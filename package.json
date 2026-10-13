@@ -4,8 +4,8 @@
   "scripts": {
     "ng": "ng",
     "postinstall": "npm run build:ssr",
-    "start": "node dist/frontend/server/main.js",
-    "build": "ng build",
+    "start": "node api.js && node dist/frontend/server/main.js",
+    "build": "node api.js && ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
